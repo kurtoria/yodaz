@@ -9,6 +9,16 @@
     <title>YODAZ</title>
   </head>
   <body>
+
+    <style>
+    a:link { text-decoration: none; color: black; }
+    a:visited { text-decoration: none; color: black; }
+    a:active { text-decoration: none; color: black; }
+    a:focus { text-decoration: none; color: black; }
+    a:hover { text-decoration: none; color: grey; }
+
+    </style>
+
     <div id="app"></div>
     <script type="text/jsx">
     var HashRouter = ReactRouterDOM.HashRouter;
@@ -146,13 +156,19 @@
       ReactDOM.render(<HashRouter>
         <div>
             <nav>
-              <ul>
-                <li><Link to="/getallcities">Get all Cities</Link></li>
-                <li><Link to="/addcity">Add City</Link></li>
-                <li><Link to="/updatecity">Update City</Link></li>
-                <li><Link to="/updatepopulation">Update Population</Link></li>
-                <li><Link to="/deletecity">Delete City</Link></li>
-                <li><Link to="/food">Food</Link></li>
+              <ul style={{listStyleType: 'none', textAlign: 'center', margin: '0'}}>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/getallcities">Get all Cities</Link></li>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/addcity">Add City</Link></li>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/updatecity">Update City</Link></li>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/updatepopulation">Update Population</Link></li>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/deletecity">Delete City</Link></li>
+                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
+                <Link to="/food">Food</Link></li>
             </ul>
           </nav>
         <Route component={Cities} path='/getallcities' />
