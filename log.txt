@@ -5,4 +5,6 @@
 - La till react-filer (Emma)
 - Skrev script-sourse (Ria)
 - Ändrade script type="text/jsx" (Hanna)
-- Skapade upp 'tabs', och skal för kompnenter (Ria)
+- Skapade upp 'tabs', och skal för komponenter (Ria)
+- Skapade hämtning av alla städer, och skapade upp table för att visa resultatet (Ria)
+- Css för filkarna (Ria)
