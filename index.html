@@ -37,33 +37,42 @@
     class Addcity extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { valueCity: "City name", valuePop: "Population" }
+        this.state = { valuecity: 'City name', valuepop: 'Population' }
         this.onClick = this.onClick.bind(this)
         this.onTextChange = this.onTextChange.bind(this)
       //  this.fetchStuff = this.fetchStuff.bind(this)
       }
       render() {
         return <section>
-        <input valueCity={this.state.valueCity} onChange={this.onTextChange}/>
-        <input valuePop={this.state.valuePop} onChange={this.onTextChange}/>
+        <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
+        <input id="inputpop" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
         <button onClick={this.onClick}>ADD CITY!</button>
         </section>
       }
       onClick(event) {
-      console.log(this.state.value);
+      console.log("City is: " + this.state.valuecity);
+      console.log("Population is: " + this.state.valuepop);
       //this.fetchStuff(this.state.value)
 
-      fetch("http://cities.jonkri.se/", {
-          body: JSON.stringify({ "name": "Skövde", "population": 928459845925 }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: 'POST'
-       })
+    fetch("http://cities.jonkri.se/", {
+        body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: 'POST'
+     });
+
     }
     onTextChange(event) {
       console.log(event.target.value);
-      this.setState({value: event.target.value})
+
+      if (event.target.id == "inputcity") {
+        console.log("clicked input city");
+        this.setState({valuecity: event.target.value})
+      } else {
+        console.log("clicked input pop");
+        this.setState({valuepop: event.target.value})
+      }
     }
         componentDidMount() {
           fetch('http://cities.jonkri.se/')
