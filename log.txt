@@ -10,3 +10,4 @@
 - Skapade upp 'tabs', och skal för komponenter (Ria)
 - Skapade hämtning av alla städer, och skapade upp table för att visa resultatet (Ria)
 - Css för filkarna (Ria)
+- Checkar så att det inte går att skriva in felaktig information i när man lägger till en stad (Moa)

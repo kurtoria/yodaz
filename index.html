@@ -77,7 +77,7 @@
     class Addcity extends React.Component {
             constructor(props) {
               super(props);
-              this.state = { valuecity: "City name", valuepop: "Population" }
+              this.state = { valuecity: "", valuepop: "" }
               this.onClick = this.onClick.bind(this)
               this.onTextChange = this.onTextChange.bind(this)
             }
@@ -85,41 +85,53 @@
             render() {
               return <section>
               <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
-              <input id="inputpop" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
+              <input id="inputpop" type="number" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
               <button onClick={this.onClick}>ADD CITY!</button>
               </section>
             }
 
             onClick(event) {
-            console.log("City is: " + this.state.valuecity);
-            console.log("Population is: " + this.state.valuepop);
+              console.log("City is: " + this.state.valuecity);
+              console.log("Population is: " + this.state.valuepop);
 
-          fetch("http://cities.jonkri.se/", {
-              body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
-              headers: {
-                "Content-Type": "application/json"
-              },
-              method: 'POST'
-           });
-
-           alert("You added " + this.state.valuecity + " " + this.state.valuepop);
-          }
+              if (this.state.valuecity != "" && this.state.valuepop != ""){
+                if (this.state.valuepop != 0){
+                  fetch("http://cities.jonkri.se/", {
+                    body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    method: 'POST'
+                  });
+                  alert("You sucessfully added " + this.state.valuecity + " with a population of " + this.state.valuepop + ". Nice!");
+                  //this.setState({valuecity: ""});
+                  //this.setState({valuepop: ""});
+                  document.getElementById("inputcity").value = "";
+                  document.getElementById("inputpop").value = "";
+                } else {
+                  alert("The city must have at least one citizen, right?");
+                }
+              } else {
+                alert("You must fill all the fields.");
+              }
+            }
 
           onTextChange(event) {
-            console.log(event.target.value);
+            //console.log(event.target.value);
 
             if (event.target.id == "inputcity") {
-              console.log("clicked input city");
+              //console.log("clicked input city");
               this.setState({valuecity: event.target.value})
             } else {
-              console.log("clicked input pop");
+              //console.log("clicked input pop");
               this.setState({valuepop: event.target.value})
             }
           }
-              componentDidMount() {
-                fetch('http://cities.jonkri.se/')
-                .then(function (response) { return response.json(); })
-                .then(function (result) { console.log(result); });
+
+          componentDidMount() {
+            fetch('http://cities.jonkri.se/')
+            .then(function (response) { return response.json(); })
+            .then(function (result) { console.log(result); });
           }
   }
 
