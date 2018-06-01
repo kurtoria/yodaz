@@ -56,7 +56,73 @@
       //ADD CITY COMPONENT END -----------------------------------
 
 
-      ReactDOM.render(
+
+
+
+    var HashRouter = ReactRouterDOM.HashRouter;
+    var Link = ReactRouterDOM.Link;
+    var Route = ReactRouterDOM.Route;
+
+    class Cities extends React.Component {
+      render () {
+        return  <section><h1>Get All Cities</h1><p>...</p></section>
+      }
+    }
+
+    class EditCities extends React.Component {
+
+    }
+
+    class Food extends React.Component {
+      render () {
+        return  <section><h1>Food</h1><p>...</p></section>
+      }
+    }
+
+    class Addcity extends React.Component {
+      render () {
+        return  <section><h1>Add city</h1><p>...</p></section>
+      }
+    }
+
+    class Updatecity extends React.Component {
+      render () {
+        return  <section><h1>Update City</h1><p>...</p></section>
+      }
+    }
+
+    class Updatepopulation extends React.Component {
+      render () {
+        return  <section><h1>Update Population</h1><p>...</p></section>
+      }
+    }
+
+    class Deletecity extends React.Component {
+      render () {
+        return  <section><h1>Delete City</h1><p>...</p></section>
+      }
+    }
+
+      ReactDOM.render(<HashRouter>
+        <div>
+            <nav>
+              <ul>
+                <li><Link to="/getallcities">Get all Cities</Link></li>
+                <li><Link to="/addcity">Add City</Link></li>
+                <li><Link to="/updatecity">Update City</Link></li>
+                <li><Link to="/updatepopulation">Update Population</Link></li>
+                <li><Link to="/deletecity">Delete City</Link></li>
+                <li><Link to="/food">Food</Link></li>
+            </ul>
+          </nav>
+        <Route component={Cities} path='/getallcities' />
+        <Route component={Addcity} path='/addcity' />
+        <Route component={Updatecity} path='/updatecity' />
+        <Route component={Updatepopulation} path='/updatepopulation' />
+        <Route component={Deletecity} path='/deletecity' />
+        <Route component={Food} path='/food' />
+        </div>
+      </HashRouter>,
         document.getElementById('app')
       );
 
