@@ -65,50 +65,50 @@
 
     // MOA
     class Addcity extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = { valuecity: "City name", valuepop: "Population" }
-        this.onClick = this.onClick.bind(this)
-        this.onTextChange = this.onTextChange.bind(this)
-      }
+            constructor(props) {
+              super(props);
+              this.state = { valuecity: "City name", valuepop: "Population" }
+              this.onClick = this.onClick.bind(this)
+              this.onTextChange = this.onTextChange.bind(this)
+            }
 
-      render() {
-        return <section>
-        <input valueCity={this.state.valueCity} onChange={this.onTextChange}/>
-        <input valuePop={this.state.valuePop} onChange={this.onTextChange}/>
-        <button onClick={this.onClick}>ADD CITY!</button>
-        </section>
-      }
+            render() {
+              return <section>
+              <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
+              <input id="inputpop" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
+              <button onClick={this.onClick}>ADD CITY!</button>
+              </section>
+            }
 
-      onClick(event) {
-      console.log("City is: " + this.state.valuecity);
-      console.log("Population is: " + this.state.valuepop);
+            onClick(event) {
+            console.log("City is: " + this.state.valuecity);
+            console.log("Population is: " + this.state.valuepop);
 
-      fetch("http://cities.jonkri.se/", {
-          body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: 'POST'
-       });
-      }
-    onTextChange(event) {
-      console.log(event.target.value);
+          fetch("http://cities.jonkri.se/", {
+              body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+              headers: {
+                "Content-Type": "application/json"
+              },
+              method: 'POST'
+           });
+          }
 
-      if (event.target.id == "inputcity") {
-        console.log("clicked input city");
-        this.setState({valuecity: event.target.value})
-      } else {
-        console.log("clicked input pop");
-        this.setState({valuepop: event.target.value})
-      }
-    }
+          onTextChange(event) {
+            console.log(event.target.value);
 
-        componentDidMount() {
-          fetch('http://cities.jonkri.se/')
-          .then(function (response) { return response.json(); })
-          .then(function (result) { console.log(result); });
-    }
+            if (event.target.id == "inputcity") {
+              console.log("clicked input city");
+              this.setState({valuecity: event.target.value})
+            } else {
+              console.log("clicked input pop");
+              this.setState({valuepop: event.target.value})
+            }
+          }
+              componentDidMount() {
+                fetch('http://cities.jonkri.se/')
+                .then(function (response) { return response.json(); })
+                .then(function (result) { console.log(result); });
+          }
   }
 
     // VICTORIA
