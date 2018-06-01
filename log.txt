@@ -1,0 +1,4 @@
+1 Juni
+- Startade ett projekt på Github
+- Champagne
+- La till react-filer och fixade med sourse 
