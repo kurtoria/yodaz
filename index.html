@@ -9,18 +9,47 @@
     <title>YODAZ</title>
   </head>
   <body>
-
     <div id="app"></div>
-
     <script type="text/jsx">
-
     var HashRouter = ReactRouterDOM.HashRouter;
     var Link = ReactRouterDOM.Link;
     var Route = ReactRouterDOM.Route;
 
     class Cities extends React.Component {
-      render () {
-        return  <section><h1>Get All Cities</h1><p>...</p></section>
+
+      constructor(props){
+        super()
+        this.state = { cities: []}
+      }
+
+      componentDidMount(){
+        fetch('http://cities.jonkri.se/')
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.setState({ cities: result}) })
+      }
+
+      render(){
+        var citiesToRender = this.state.cities.map(city =>
+          <tr key={city.id}>
+            <td>{city.name}</td>
+            <td>{city.population}</td>
+          </tr>)
+
+        return <div>
+          <table style={{backgroundColor: 'gray', color: 'white'}}>
+            <thead>
+              <tr>
+                <th>Stad</th>
+                <th>Antal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {citiesToRender}
+            </tbody>
+          </table>
+        </div>
       }
     }
 
@@ -34,36 +63,47 @@
       }
     }
 
+    // MOA
     class Addcity extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { valueCity: "City name", valuePop: "Population" }
+        this.state = { valuecity: 'City name', valuepop: 'Population' }
         this.onClick = this.onClick.bind(this)
         this.onTextChange = this.onTextChange.bind(this)
-      //  this.fetchStuff = this.fetchStuff.bind(this)
       }
+
       render() {
         return <section>
-        <input valueCity={this.state.valueCity} onChange={this.onTextChange}/>
-        <input valuePop={this.state.valuePop} onChange={this.onTextChange}/>
+        <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
+        <input id="inputpop" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
         <button onClick={this.onClick}>ADD CITY!</button>
         </section>
       }
-      onClick(event) {
-      console.log(this.state.value);
-      //this.fetchStuff(this.state.value)
 
-      fetch("http://cities.jonkri.se/", {
-          body: JSON.stringify({ "name": "Skövde", "population": 928459845925 }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: 'POST'
-       })
+      onClick(event) {
+      console.log("City is: " + this.state.valuecity);
+      console.log("Population is: " + this.state.valuepop);
+
+    fetch("http://cities.jonkri.se/", {
+        body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: 'POST'
+     });
+
     }
+
     onTextChange(event) {
       console.log(event.target.value);
-      this.setState({value: event.target.value})
+
+      if (event.target.id == "inputcity") {
+        console.log("clicked input city");
+        this.setState({valuecity: event.target.value})
+      } else {
+        console.log("clicked input pop");
+        this.setState({valuepop: event.target.value})
+      }
     }
         componentDidMount() {
           fetch('http://cities.jonkri.se/')
@@ -72,6 +112,7 @@
     }
   }
 
+    // VICTORIA
     class Updatecity extends React.Component {
       render () {
         return  <section><h1>Update City</h1><p>...</p></section>
@@ -79,38 +120,67 @@
     }
 
     //Emma
-    class UpdatePopulation extends React.Component {
+    class Updatepopulation extends React.Component {
       constructor(props){
         super(props)
-        this.state = { cities: [],
-          city: undefined,
-          population: undefined,
-          cityBeingEdited: undefined}
+          this.state = { cities: [],
+            id: undefined,
+            population: undefined,
+            cityBeingEdited: undefined}
+            this.onUpdateClick = this.onUpdateClick.bind(this)
       }
-      render () {
-        var cities = []
-          cities = this.state.cities.map(city =>
+      onUpdateClick(){
+        fetch('http://cities.jonkri.se/' + this.state.id , {
+          body: JSON.stringify({ name: this.state.cityBeingEdited, population: this.state.population }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+            method: 'PUT'
+          })
+        }
+        render () {
+          var cities = this.state.cities.map(city =>
           <tr key={city.id}>
-          <td>{city.name}</td>
-          <td onClick={function() {this.state.cityBeingEdited = city.name; this.setState(this.state)}.bind(this)}>
-          {this.state.cityBeingEdited === city.name ?
-            <input onChange={function(event){ city.population = event.target.value; this.setState(this.state)}.bind(this)} value={city.population}></input> : city.population}</td>
+            <td>{city.name}</td>
+            <input onChange={function(event){
+              this.state.cityBeingEdited = city.name
+              this.state.id = city.id
+              city.population = event.target.value
+              this.state.population = event.target.value
+              this.setState(this.state)}.bind(this)}
+              value={city.population}>
+            </input>
+            <button type="button" onClick={this.onUpdateClick}>Update</button>
           </tr>)
-          return <div><table>{cities}</table></div>
+            return <div><table>{cities}</table></div>
+        }
+        componentDidMount(){
+          fetch('http://cities.jonkri.se/').then(response => response.json())
+          .then(result => {
+            this.setState({ cities: result })
+            console.log(result)
+          })
+        }
       }
-      componentDidMount(){
-        fetch('http://cities.jonkri.se/').then(response => response.json())
-        .then(result => {
-          this.setState({ cities: result })
-        })
-      }
-    }
-    //Emma
+      //Emma
 
+    // HANNA
     class Deletecity extends React.Component {
       render () {
-        return  <section><h1>Delete City</h1><p>...</p></section>
+        return
+        <section>
+          <h1>
+            <img src="trash-bin-symbol.jpg"></img>
+          </h1>
+          <button onClick={this.onClick}>Delete</button>
+        </section>
       }
+
+      onClick(event) {
+      fetch('http://cities.jonkri.se/6fc1a491-3710-42f2-936d-e9bf9be4f915', {
+        method: "DELETE"
+      });}
+
     }
 
       ReactDOM.render(<HashRouter>
