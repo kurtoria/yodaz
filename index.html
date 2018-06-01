@@ -14,51 +14,6 @@
 
     <script type="text/jsx">
 
-      //Component for ADDING CITY --------------------------------
-      class AddCity extends React.Component {
-      contructor(props) {
-        super(props);
-        this.state = { valueCity: props.initialValueCity, valuePop: props.initialValuePop }
-        this.onClick = this.onClick.bind(this)
-        this.onTextChange = this.onTextChange.bind(this)
-        this.fetchStuff = this.fetchStuff.bind(this)
-      }
-      render() {
-        return <section>
-        <input valueCity={this.state.valueCity} onChange={this.onTextChange}/>
-        <input valuePop={this.state.valuePop} onChange={this.onTextChange}/>
-        <button onClick={this.onClick}>ADD CITY!</button>
-        </section>
-      }
-      onClick(event) {
-      console.log(this.state.value);
-      //this.fetchStuff(this.state.value)
-
-      fetch("http://cities.jonkri.se/", {
-          body: JSON.stringify({ "name": "Skövde", "population": 928459845925 }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: 'POST'
-       })
-    }
-      }
-        componentDidMount() {
-          fetch('http://cities.jonkri.se/')
-          .then(function (response) { return response.json(); })
-          .then(function (result) { console.log(result); });
-      }
-
-      ReactDOM.render(
-        <AddCity initialValueCity="City name", initialValuePop="Population amount" ></AddCity>,
-        document.getElementById("app")
-      )
-      //ADD CITY COMPONENT END -----------------------------------
-
-
-
-
-
     var HashRouter = ReactRouterDOM.HashRouter;
     var Link = ReactRouterDOM.Link;
     var Route = ReactRouterDOM.Route;
@@ -80,10 +35,42 @@
     }
 
     class Addcity extends React.Component {
-      render () {
-        return  <section><h1>Add city</h1><p>...</p></section>
+      constructor(props) {
+        super(props);
+        this.state = { valueCity: "City name", valuePop: "Population" }
+        this.onClick = this.onClick.bind(this)
+        this.onTextChange = this.onTextChange.bind(this)
+      //  this.fetchStuff = this.fetchStuff.bind(this)
       }
+      render() {
+        return <section>
+        <input valueCity={this.state.valueCity} onChange={this.onTextChange}/>
+        <input valuePop={this.state.valuePop} onChange={this.onTextChange}/>
+        <button onClick={this.onClick}>ADD CITY!</button>
+        </section>
+      }
+      onClick(event) {
+      console.log(this.state.value);
+      //this.fetchStuff(this.state.value)
+
+      fetch("http://cities.jonkri.se/", {
+          body: JSON.stringify({ "name": "Skövde", "population": 928459845925 }),
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: 'POST'
+       })
     }
+    onTextChange(event) {
+      console.log(event.target.value);
+      this.setState({value: event.target.value})
+    }
+        componentDidMount() {
+          fetch('http://cities.jonkri.se/')
+          .then(function (response) { return response.json(); })
+          .then(function (result) { console.log(result); });
+    }
+  }
 
     class Updatecity extends React.Component {
       render () {
