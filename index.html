@@ -14,7 +14,33 @@
 
     <script type="text/jsx">
 
-      ReactDOM.render(
+    var HashRouter = ReactRouterDOM.HashRouter;
+    var Link = ReactRouterDOM.Link;
+    var Route = ReactRouterDOM.Route;
+
+    class Cities extends React.Component {
+      render () {
+        return  <section><h1>Cities</h1><p>...</p></section>
+      }
+    }
+    class Food extends React.Component {
+      render () {
+        return  <section><h1>Food</h1><p>...</p></section>
+      }
+    }
+
+      ReactDOM.render(<HashRouter>
+        <div>
+            <nav>
+              <ul>
+                <li><Link to="/cities">Cities</Link></li>
+                <li><Link to="/food">Food</Link></li>
+            </ul>
+          </nav>
+        <Route component={Cities} path='/cities' />
+        <Route component={Food} path='/food' />
+        </div>
+      </HashRouter>,
         document.getElementById('app')
       );
 
