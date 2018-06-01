@@ -16,8 +16,40 @@
     var Route = ReactRouterDOM.Route;
 
     class Cities extends React.Component {
-      render () {
-        return  <section><h1>Get All Cities</h1><p>...</p></section>
+
+      constructor(props){
+        super()
+        this.state = { cities: []}
+      }
+
+      componentDidMount(){
+        fetch('http://cities.jonkri.se/')
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.setState({ cities: result}) })
+      }
+
+      render(){
+        var citiesToRender = this.state.cities.map(city =>
+          <tr key={city.id}>
+            <td>{city.name}</td>
+            <td>{city.population}</td>
+          </tr>)
+
+        return <div>
+          <table style={{backgroundColor: 'gray', color: 'white'}}>
+            <thead>
+              <tr>
+                <th>Stad</th>
+                <th>Antal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {citiesToRender}
+            </tbody>
+          </table>
+        </div>
       }
     }
 
@@ -38,7 +70,6 @@
         this.state = { valueCity: "City name", valuePop: "Population" }
         this.onClick = this.onClick.bind(this)
         this.onTextChange = this.onTextChange.bind(this)
-      //  this.fetchStuff = this.fetchStuff.bind(this)
       }
 
       render() {
@@ -50,8 +81,8 @@
       }
 
       onClick(event) {
-      console.log(this.state.value);
-      //this.fetchStuff(this.state.value)
+      console.log("City is: " + this.state.valuecity);
+      console.log("Population is: " + this.state.valuepop);
 
       fetch("http://cities.jonkri.se/", {
           body: JSON.stringify({ "name": "Skövde", "population": 928459845925 }),
