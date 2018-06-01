@@ -1,4 +1,7 @@
 1 Juni
-- Startade ett projekt på Github
-- Champagne
-- La till react-filer och fixade med sourse 
+- Startade ett projekt på Github (Victoria)
+- Champagne (Alla)
+- Skapade en index.html (Victoria)
+- La till react-filer (Emma)
+- Skrev script-sourse (Ria)
+- Ändrade script type="text/jsx" (Hanna)
