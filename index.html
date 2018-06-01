@@ -38,9 +38,8 @@
         this.state = { valuecity: 'City name', valuepop: 'Population' }
         this.onClick = this.onClick.bind(this)
         this.onTextChange = this.onTextChange.bind(this)
-      //  this.fetchStuff = this.fetchStuff.bind(this)
       }
-      
+
       render() {
         return <section>
         <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
@@ -52,7 +51,6 @@
       onClick(event) {
       console.log("City is: " + this.state.valuecity);
       console.log("Population is: " + this.state.valuepop);
-      //this.fetchStuff(this.state.value)
 
     fetch("http://cities.jonkri.se/", {
         body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
