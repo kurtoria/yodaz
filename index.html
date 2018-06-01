@@ -16,8 +16,40 @@
     var Route = ReactRouterDOM.Route;
 
     class Cities extends React.Component {
-      render () {
-        return  <section><h1>Get All Cities</h1><p>...</p></section>
+
+      constructor(props){
+        super()
+        this.state = { cities: []}
+      }
+
+      componentDidMount(){
+        fetch('http://cities.jonkri.se/')
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.setState({ cities: result}) })
+      }
+
+      render(){
+        var citiesToRender = this.state.cities.map(city =>
+          <tr key={city.id}>
+            <td>{city.name}</td>
+            <td>{city.population}</td>
+          </tr>)
+
+        return <div>
+          <table style={{backgroundColor: 'gray', color: 'white'}}>
+            <thead>
+              <tr>
+                <th>Stad</th>
+                <th>Antal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {citiesToRender}
+            </tbody>
+          </table>
+        </div>
       }
     }
 
@@ -97,8 +129,20 @@
     // HANNA
     class Deletecity extends React.Component {
       render () {
-        return  <section><h1>Delete City</h1><p>...</p></section>
+        return
+        <section>
+          <h1>
+            <img src="trash-bin-symbol.jpg"></img>
+          </h1>
+          <button onClick={this.onClick}>Delete</button>
+        </section>
       }
+
+      onClick(event) {
+      fetch('http://cities.jonkri.se/6fc1a491-3710-42f2-936d-e9bf9be4f915', {
+        method: "DELETE"
+      });}
+
     }
 
       ReactDOM.render(<HashRouter>
