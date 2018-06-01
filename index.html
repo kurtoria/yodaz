@@ -78,11 +78,34 @@
       }
     }
 
-    class Updatepopulation extends React.Component {
+    //Emma
+    class UpdatePopulation extends React.Component {
+      constructor(props){
+        super(props)
+        this.state = { cities: [],
+          city: undefined,
+          population: undefined,
+          cityBeingEdited: undefined}
+      }
       render () {
-        return  <section><h1>Update Population</h1><p>...</p></section>
+        var cities = []
+          cities = this.state.cities.map(city =>
+          <tr key={city.id}>
+          <td>{city.name}</td>
+          <td onClick={function() {this.state.cityBeingEdited = city.name; this.setState(this.state)}.bind(this)}>
+          {this.state.cityBeingEdited === city.name ?
+            <input onChange={function(event){ city.population = event.target.value; this.setState(this.state)}.bind(this)} value={city.population}></input> : city.population}</td>
+          </tr>)
+          return <div><table>{cities}</table></div>
+      }
+      componentDidMount(){
+        fetch('http://cities.jonkri.se/').then(response => response.json())
+        .then(result => {
+          this.setState({ cities: result })
+        })
       }
     }
+    //Emma
 
     class Deletecity extends React.Component {
       render () {
