@@ -137,9 +137,46 @@
 
     // VICTORIA
     class Updatecity extends React.Component {
-      render () {
-        return  <section><h1>Update City</h1><p>...</p></section>
-      }
+        constructor(props) {
+          super(props)
+          this.state = {
+            cities: [],
+            city: undefined,
+            population: undefined
+          }
+        }
+        componentDidMount() {
+          fetch('http://cities.jonkri.se/')
+          .then(function (response) {
+            return response.json();
+          }).then( result => {
+            console.log(result);
+            this.setState({
+              cities: result
+            })
+          });
+        }
+        onChange() {
+          fetch('http://cities.jonkri.se/' + {cityId}, {
+            body: JSON.stringify({ "name": city, "population": population }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'PUT'
+          }).then(function (response) {
+            return response.json();
+          }).then( result =>  {
+            console.log(result);
+          });
+        }
+        render() {
+          var cities = []
+          cities = this.state.cities.map(city =>
+            <tr key={city.id}>
+            <td>{city.name}</td><td>{city.population}</td>
+            </tr>)
+            return <div><table>{cities}</table><button id="editButton">Ändrar</button></div>
+        }
     }
 
     // EMMA
@@ -151,21 +188,38 @@
 
     // HANNA
     class Deletecity extends React.Component {
-      render () {
-        return  <section>
-        <h1>Delete City</h1>
-        <button onClick={this.onClick}> <img alt="Trash bin symbol" src="trash-bin-symbol.jpg"/> </button>
+
+      constructor(props) {
+        super(props);
+        this.state = { valueID: "City ID"}
+        this.onClick = this.onClick.bind(this)
+        this.onTextChange = this.onTextChange.bind(this)
+      }
+
+      render() {
+        return <section>
+        <input id="input-id" valueID={this.state.valueID} onChange={this.onTextChange}/>
+        <img alt="Trash bin symbol" src="trash-bin-symbol.jpg" onClick={this.onClick} />
         </section>
       }
 
       onClick(event) {
-      fetch('http://cities.jonkri.se/5347da70-fef3-4e8f-ba49-e8010edba878', {
-        method: "DELETE"
-      });}
+        var inputId = this.state.valueID;
+        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" });
+        alert("You deleted city with id \"" + this.state.valueID + "\".");
+      }
 
+      onTextChange(event) {
+        if (event.target.id == "input-id") {
+        this.setState({valueID: event.target.value}) }
+      }
+
+      componentDidMount() {
+        fetch('http://cities.jonkri.se/')
+        .then(function (response) { return response.json(); })
+        .then(function (result) { console.log(result); });
+      }
     }
-
-
 
       ReactDOM.render(<HashRouter>
         <div>
