@@ -6,6 +6,7 @@
 - Skrev script-sourse (Ria)
 - Ändrade script type="text/jsx" (Hanna)
 - Delte funktion för att ta bort städer (Hanna)
+- Addcity component som lägger till en stad (Moa)
 - Skapade upp 'tabs', och skal för komponenter (Ria)
 - Skapade hämtning av alla städer, och skapade upp table för att visa resultatet (Ria)
 - Css för filkarna (Ria)
