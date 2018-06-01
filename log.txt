@@ -5,3 +5,4 @@
 - La till react-filer (Emma)
 - Skrev script-sourse (Ria)
 - Ändrade script type="text/jsx" (Hanna)
+- Skapade upp 'tabs', och skal för kompnenter (Ria)
