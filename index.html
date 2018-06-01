@@ -184,9 +184,12 @@
       }
 
       onClick(event) {
-      fetch('http://cities.jonkri.se/5347da70-fef3-4e8f-ba49-e8010edba878', {
+        var abc = "697399b6-b179-43fc-afc4-c174dd53fcc8";
+        fetch(('http://cities.jonkri.se/' + abc ) , {
         method: "DELETE"
-      });}
+        });
+        alert("You deleted the city with id: "+abc+".");
+      }
 
     }
 
