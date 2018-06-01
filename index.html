@@ -67,7 +67,7 @@
     class Addcity extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { valuecity: 'City name', valuepop: 'Population' }
+        this.state = { valuecity: "City name", valuepop: "Population" }
         this.onClick = this.onClick.bind(this)
         this.onTextChange = this.onTextChange.bind(this)
       }
@@ -84,15 +84,14 @@
       console.log("City is: " + this.state.valuecity);
       console.log("Population is: " + this.state.valuepop);
 
-    fetch("http://cities.jonkri.se/", {
-        body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: 'POST'
-     });
-
-    }
+      fetch("http://cities.jonkri.se/", {
+          body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: 'POST'
+       });
+      }
 
     onTextChange(event) {
       console.log(event.target.value);
