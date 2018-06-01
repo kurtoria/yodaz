@@ -9,11 +9,8 @@
     <title>YODAZ</title>
   </head>
   <body>
-
     <div id="app"></div>
-
     <script type="text/jsx">
-
     var HashRouter = ReactRouterDOM.HashRouter;
     var Link = ReactRouterDOM.Link;
     var Route = ReactRouterDOM.Route;
@@ -34,6 +31,7 @@
       }
     }
 
+    // MOA
     class Addcity extends React.Component {
       constructor(props) {
         super(props);
@@ -42,6 +40,7 @@
         this.onTextChange = this.onTextChange.bind(this)
       //  this.fetchStuff = this.fetchStuff.bind(this)
       }
+      
       render() {
         return <section>
         <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
@@ -49,6 +48,7 @@
         <button onClick={this.onClick}>ADD CITY!</button>
         </section>
       }
+
       onClick(event) {
       console.log("City is: " + this.state.valuecity);
       console.log("Population is: " + this.state.valuepop);
@@ -63,6 +63,7 @@
      });
 
     }
+
     onTextChange(event) {
       console.log(event.target.value);
 
@@ -81,18 +82,21 @@
     }
   }
 
+    // VICTORIA
     class Updatecity extends React.Component {
       render () {
         return  <section><h1>Update City</h1><p>...</p></section>
       }
     }
 
+    // EMMA
     class Updatepopulation extends React.Component {
       render () {
         return  <section><h1>Update Population</h1><p>...</p></section>
       }
     }
 
+    // HANNA
     class Deletecity extends React.Component {
       render () {
         return  <section><h1>Delete City</h1><p>...</p></section>
