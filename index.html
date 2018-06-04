@@ -87,7 +87,14 @@
                 "Content-Type": "application/json"
               },
               method: 'POST'
-            });
+            }).then(result => {
+              fetch('http://cities.jonkri.se/')
+              .then(response => response.json())
+              .then(result => {
+                console.log(result);
+                this.setState({ cities: result}) })
+            })
+
             alert("You sucessfully added " + this.state.city + " with a population of " + this.state.population + ". Nice!");
             document.getElementById("inputcity").value = "";
             document.getElementById("inputpop").value = "";
@@ -147,69 +154,6 @@
         return  <section><h1>Food</h1><p>...</p></section>
       }
     }
-
-
-
-    // MOA
-    class Addcity extends React.Component {
-            constructor(props) {
-              super(props);
-              this.state = { valuecity: "", valuepop: "" }
-              this.onClick = this.onClick.bind(this)
-              this.onTextChange = this.onTextChange.bind(this)
-            }
-
-            render() {
-              return <section>
-              <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
-              <input id="inputpop" type="number" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
-              <button onClick={this.onClick}>ADD CITY!</button>
-              </section>
-            }
-
-            onClick(event) {
-              console.log("City is: " + this.state.valuecity);
-              console.log("Population is: " + this.state.valuepop);
-
-              if (this.state.valuecity != "" && this.state.valuepop != ""){
-                if (this.state.valuepop != 0){
-                  fetch("http://cities.jonkri.se/", {
-                    body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
-                    headers: {
-                      "Content-Type": "application/json"
-                    },
-                    method: 'POST'
-                  });
-                  alert("You sucessfully added " + this.state.valuecity + " with a population of " + this.state.valuepop + ". Nice!");
-                  document.getElementById("inputcity").value = "";
-                  document.getElementById("inputpop").value = "";
-                } else {
-                  alert("The city must have at least one citizen, right?");
-                }
-              } else {
-                alert("You must fill all the fields.");
-              }
-            }
-
-          onTextChange(event) {
-            //console.log(event.target.value);
-
-            if (event.target.id == "inputcity") {
-              //console.log("clicked input city");
-              this.setState({valuecity: event.target.value})
-            } else {
-              //console.log("clicked input pop");
-              this.setState({valuepop: event.target.value})
-            }
-          }
-
-          componentDidMount() {
-            fetch('http://cities.jonkri.se/')
-            .then(function (response) { return response.json(); })
-            .then(function (result) { console.log(result); });
-          }
-  }
-
 
     // VICTORIA
     class Updatecity extends React.Component {
@@ -312,20 +256,18 @@
           })
         }
       }
-  
+
       ReactDOM.render(<HashRouter>
         <div>
             <nav>
               <ul>
                 <li><Link to="/getallcities">Get all Cities</Link></li>
-                <li><Link to="/addcity">Add City</Link></li>
                 <li><Link to="/updatecity">Update City</Link></li>
                 <li><Link to="/updatepopulation">Update Population</Link></li>
                 <li><Link to="/food">Food</Link></li>
             </ul>
           </nav>
         <Route component={Cities} path='/getallcities' />
-        <Route component={Addcity} path='/addcity' />
         <Route component={Updatecity} path='/updatecity' />
         <Route component={Updatepopulation} path='/updatepopulation' />
         <Route component={Food} path='/food' />
