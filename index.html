@@ -312,43 +312,7 @@
           })
         }
       }
-      //Emma
-
-    // HANNA
-    class Deletecity extends React.Component {
-
-      constructor(props) {
-        super(props);
-        this.state = { valueID: "City ID"}
-        this.onClick = this.onClick.bind(this)
-        this.onTextChange = this.onTextChange.bind(this)
-      }
-
-      render() {
-        return <section>
-        <input id="input-id" valueID={this.state.valueID} onChange={this.onTextChange}/>
-        <img alt="Trash bin symbol" src="trash-bin-symbol.jpg" onClick={this.onClick} />
-        </section>
-      }
-
-      onClick(event) {
-        var inputId = this.state.valueID;
-        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" });
-        alert("You deleted city with id \"" + this.state.valueID + "\".");
-      }
-
-      onTextChange(event) {
-        if (event.target.id == "input-id") {
-        this.setState({valueID: event.target.value}) }
-      }
-
-      componentDidMount() {
-        fetch('http://cities.jonkri.se/')
-        .then(function (response) { return response.json(); })
-        .then(function (result) { console.log(result); });
-      }
-    }
-
+  
       ReactDOM.render(<HashRouter>
         <div>
             <nav>
@@ -357,7 +321,6 @@
                 <li><Link to="/addcity">Add City</Link></li>
                 <li><Link to="/updatecity">Update City</Link></li>
                 <li><Link to="/updatepopulation">Update Population</Link></li>
-                <li><Link to="/deletecity">Delete City</Link></li>
                 <li><Link to="/food">Food</Link></li>
             </ul>
           </nav>
@@ -365,7 +328,6 @@
         <Route component={Addcity} path='/addcity' />
         <Route component={Updatecity} path='/updatecity' />
         <Route component={Updatepopulation} path='/updatepopulation' />
-        <Route component={Deletecity} path='/deletecity' />
         <Route component={Food} path='/food' />
         </div>
       </HashRouter>,
