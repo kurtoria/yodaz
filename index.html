@@ -40,15 +40,25 @@
           this.setState({ cities: result}) })
       }
 
+      // When clicking at delete buttin
+      onDeleteClick (event) {
+        console.log(event.target.dataset.id);
+      }
+
+      // When clicking at edit-buttin
+      onEditClick (event) {
+        console.log(event.target.dataset.id);
+      }
+
       render(){
         var citiesToRender = this.state.cities.map(city =>
-          <tr key={city.id}>
+          <tr key={city.id} id={city.id} >
             <td>{city.name}</td>
             <td>{city.population}</td>
-            <td><button id="penBtn" style={{marginRight: '5px'}}>
-            <img src='pen.png'></img></button>
-            <button id="deleteBtn" style={{marginRight: '5px'}}>
-            <img src='trash-bin-symbol.jpg'></img></button></td>
+            <td>
+              <button id="penBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onEditClick} style={{marginRight: '5px'}}>🖊</button>
+              <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onDeleteClick} style={{marginRight: '5px'}}>🗑</button>
+            </td>
           </tr>)
 
         return <div>
