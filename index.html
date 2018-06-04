@@ -46,17 +46,10 @@
           <tr key={city.id} id={city.id} >
             <td>{city.name}</td>
             <td>{city.population}</td>
-<<<<<<< HEAD
-            <td><button id="penBtn">
-            <img src='pen.png'></img></button>
-            <button id="deleteBtn" >
-            <img src='trash-bin-symbol.jpg'></img></button></td>
-=======
             <td>
               <button id="penBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onEditClick} style={{marginRight: '5px'}}>🖊</button>
               <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onDeleteClick} style={{marginRight: '5px'}}>🗑</button>
             </td>
->>>>>>> 83afd8b56a31403a627ca08643df3c8d6f5dafbf
           </tr>)
 
         return <div>
