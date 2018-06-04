@@ -47,8 +47,9 @@
       onDeleteClick(event) {
         console.log(event.target.dataset.id);
         var inputId = event.target.dataset.id;
-        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" });
+        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" })
         alert("You deleted city with id \"" + event.target.dataset.id + "\".");
+
       }
 
       onEditChange() {
