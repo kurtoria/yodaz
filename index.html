@@ -47,10 +47,15 @@
       onDeleteClick(event) {
         console.log(event.target.dataset.id);
         var inputId = event.target.dataset.id;
-        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" });
-        alert("You deleted city with id \"" + event.target.dataset.id + "\".");
-
-      }
+        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" })
+        .then(result => {
+          fetch('http://cities.jonkri.se/')
+          .then(response => response.json())
+          .then(result => {
+            console.log(result);
+            this.setState({ cities: result}) })
+      })
+    }
 
       onEditChange() {
         fetch('http://cities.jonkri.se/' + this.state.id, {
@@ -203,7 +208,6 @@
             .then(function (response) { return response.json(); })
             .then(function (result) { console.log(result); });
           }
-          // HEj
   }
 
 
