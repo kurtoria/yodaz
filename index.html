@@ -132,6 +132,7 @@
             city: undefined,
             population: undefined
           }
+          this.onClick = this.onClick.bind(this);
         }
         componentDidMount() {
           fetch('http://cities.jonkri.se/')
@@ -157,13 +158,17 @@
             console.log(result);
           });
         }
+        onClick(event) {
+          console.log("HEJ" + event);
+          this.onChange()
+        }
         render() {
           var cities = []
           cities = this.state.cities.map(city =>
             <tr key={city.id}>
             <td>{city.name}</td><td>{city.population}</td>
             </tr>)
-            return <div><table>{cities}</table><button id="editButton">Ändrar</button></div>
+            return <div><table>{cities}</table><button id="editButton" onClick={this.onClick}>Ändrar</button></div>
         }
     }
 
