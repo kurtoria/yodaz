@@ -45,6 +45,10 @@
           <tr key={city.id}>
             <td>{city.name}</td>
             <td>{city.population}</td>
+            <td><button id="penBtn" style={{marginRight: '5px'}}>
+            <img src='pen.png'></img></button>
+            <button id="deleteBtn" style={{marginRight: '5px'}}>
+            <img src='trash-bin-symbol.jpg'></img></button></td>
           </tr>)
 
         return <div>
@@ -53,6 +57,7 @@
               <tr>
                 <th>Stad</th>
                 <th>Antal</th>
+                <th>Ändra</th>
               </tr>
             </thead>
             <tbody>
