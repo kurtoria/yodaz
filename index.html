@@ -6,19 +6,10 @@
     <script src="react-dom.development.js"></script>
     <script src='babel.js'></script>
     <script src='react-router-dom.js'></script>
+    <link href="style.css" rel="stylesheet">
     <title>YODAZ</title>
   </head>
   <body>
-
-    <style>
-    a:link { text-decoration: none; color: black; }
-    a:visited { text-decoration: none; color: black; }
-    a:active { text-decoration: none; color: black; }
-    a:focus { text-decoration: none; color: black; }
-    a:hover { text-decoration: none; color: grey; }
-
-    </style>
-
     <div id="app"></div>
     <script type="text/jsx">
     var HashRouter = ReactRouterDOM.HashRouter;
@@ -45,14 +36,14 @@
           <tr key={city.id}>
             <td>{city.name}</td>
             <td>{city.population}</td>
-            <td><button id="penBtn" style={{marginRight: '5px'}}>
+            <td><button id="penBtn">
             <img src='pen.png'></img></button>
-            <button id="deleteBtn" style={{marginRight: '5px'}}>
+            <button id="deleteBtn" >
             <img src='trash-bin-symbol.jpg'></img></button></td>
           </tr>)
 
         return <div>
-          <table style={{backgroundColor: 'gray', color: 'white'}}>
+          <table>
             <thead>
               <tr>
                 <th>Stad</th>
@@ -272,19 +263,13 @@
       ReactDOM.render(<HashRouter>
         <div>
             <nav>
-              <ul style={{listStyleType: 'none', textAlign: 'center', margin: '0'}}>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/getallcities">Get all Cities</Link></li>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/addcity">Add City</Link></li>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/updatecity">Update City</Link></li>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/updatepopulation">Update Population</Link></li>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/deletecity">Delete City</Link></li>
-                <li style={{display: 'inline', fontSize: '2em', marginRight: '2em'}}>
-                <Link to="/food">Food</Link></li>
+              <ul>
+                <li><Link to="/getallcities">Get all Cities</Link></li>
+                <li><Link to="/addcity">Add City</Link></li>
+                <li><Link to="/updatecity">Update City</Link></li>
+                <li><Link to="/updatepopulation">Update Population</Link></li>
+                <li><Link to="/deletecity">Delete City</Link></li>
+                <li><Link to="/food">Food</Link></li>
             </ul>
           </nav>
         <Route component={Cities} path='/getallcities' />

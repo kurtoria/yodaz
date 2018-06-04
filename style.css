@@ -1,0 +1,23 @@
+a:link { text-decoration: none; color: black; }
+a:visited { text-decoration: none; color: black; }
+a:active { text-decoration: none; color: black; }
+a:focus { text-decoration: none; color: black; }
+a:hover { text-decoration: none; color: grey; }
+
+td > button {margin-right: 5px}
+
+table {
+  background-color: gray;
+  color: white
+}
+
+ul {
+  list-style-type: none;
+  text-align: center;
+}
+
+li {
+  display: inline;
+  font-size: 2em;
+  margin-right: 2em
+}
