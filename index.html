@@ -181,10 +181,6 @@
         onClick(event) {
 
           console.log(this.state.city);
-          /*
-          console.log("HEJ");
-          this.onChange()
-          */
         }
         render() {
           var cities = []
@@ -194,7 +190,7 @@
             {/*<button id="editButton" onClick={this.onClick}>Ändrar</button>*/}
             <button id="editButton" onClick={function() {
               console.log(city.id + ", " + city.name + ", " + city.population);
-              
+
             }}>Ändrar</button>
             </tr>)
             return <div><table>{cities}</table></div>
