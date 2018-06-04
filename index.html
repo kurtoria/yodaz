@@ -77,7 +77,7 @@
     class Addcity extends React.Component {
             constructor(props) {
               super(props);
-              this.state = { valuecity: "City name", valuepop: "Population" }
+              this.state = { valuecity: "", valuepop: "" }
               this.onClick = this.onClick.bind(this)
               this.onTextChange = this.onTextChange.bind(this)
             }
@@ -85,41 +85,53 @@
             render() {
               return <section>
               <input id="inputcity" valuecity={this.state.valuecity} onChange={this.onTextChange}/>
-              <input id="inputpop" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
+              <input id="inputpop" type="number" valuepop={this.state.valuepop} onChange={this.onTextChange}/>
               <button onClick={this.onClick}>ADD CITY!</button>
               </section>
             }
 
             onClick(event) {
-            console.log("City is: " + this.state.valuecity);
-            console.log("Population is: " + this.state.valuepop);
+              console.log("City is: " + this.state.valuecity);
+              console.log("Population is: " + this.state.valuepop);
 
-          fetch("http://cities.jonkri.se/", {
-              body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
-              headers: {
-                "Content-Type": "application/json"
-              },
-              method: 'POST'
-           });
-
-           alert("You added " + this.state.valuecity + " " + this.state.valuepop);
-          }
+              if (this.state.valuecity != "" && this.state.valuepop != ""){
+                if (this.state.valuepop != 0){
+                  fetch("http://cities.jonkri.se/", {
+                    body: JSON.stringify({ "name": this.state.valuecity, "population": this.state.valuepop }),
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    method: 'POST'
+                  });
+                  alert("You sucessfully added " + this.state.valuecity + " with a population of " + this.state.valuepop + ". Nice!");
+                  //this.setState({valuecity: ""});
+                  //this.setState({valuepop: ""});
+                  document.getElementById("inputcity").value = "";
+                  document.getElementById("inputpop").value = "";
+                } else {
+                  alert("The city must have at least one citizen, right?");
+                }
+              } else {
+                alert("You must fill all the fields.");
+              }
+            }
 
           onTextChange(event) {
-            console.log(event.target.value);
+            //console.log(event.target.value);
 
             if (event.target.id == "inputcity") {
-              console.log("clicked input city");
+              //console.log("clicked input city");
               this.setState({valuecity: event.target.value})
             } else {
-              console.log("clicked input pop");
+              //console.log("clicked input pop");
               this.setState({valuepop: event.target.value})
             }
           }
-              componentDidMount() {
-                fetch('http://cities.jonkri.se/')
-                .then(function (response) { return response.json(); })
-                .then(function (result) { console.log(result); });
+
+          componentDidMount() {
+            fetch('http://cities.jonkri.se/')
+            .then(function (response) { return response.json(); })
+            .then(function (result) { console.log(result); });
           }
   }
 
@@ -172,30 +184,85 @@
         }
     }
 
-    // EMMA
+    //Emma
     class Updatepopulation extends React.Component {
-      render () {
-        return  <section><h1>Update Population</h1><p>...</p></section>
+      constructor(props){
+        super(props)
+          this.state = { cities: [],
+            id: undefined,
+            population: undefined,
+            cityBeingEdited: undefined}
+            this.onUpdateClick = this.onUpdateClick.bind(this)
       }
-    }
+      onUpdateClick(){
+        fetch('http://cities.jonkri.se/' + this.state.id , {
+          body: JSON.stringify({ name: this.state.cityBeingEdited, population: this.state.population }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+            method: 'PUT'
+          })
+        }
+        render () {
+          var cities = this.state.cities.map(city =>
+          <tr key={city.id}>
+            <td>{city.name}</td>
+            <input onChange={function(event){
+              this.state.cityBeingEdited = city.name
+              this.state.id = city.id
+              city.population = event.target.value
+              this.state.population = event.target.value
+              this.setState(this.state)}.bind(this)}
+              value={city.population}>
+            </input>
+            <button type="button" onClick={this.onUpdateClick}>Update</button>
+          </tr>)
+            return <div><table>{cities}</table></div>
+        }
+        componentDidMount(){
+          fetch('http://cities.jonkri.se/').then(response => response.json())
+          .then(result => {
+            this.setState({ cities: result })
+            console.log(result)
+          })
+        }
+      }
+      //Emma
 
     // HANNA
     class Deletecity extends React.Component {
-      render () {
-        return  <section>
-        <h1>Delete City</h1>
-        <button onClick={this.onClick}> <img alt="Trash bin symbol" src="trash-bin-symbol.jpg"/> </button>
+
+      constructor(props) {
+        super(props);
+        this.state = { valueID: "City ID"}
+        this.onClick = this.onClick.bind(this)
+        this.onTextChange = this.onTextChange.bind(this)
+      }
+
+      render() {
+        return <section>
+        <input id="input-id" valueID={this.state.valueID} onChange={this.onTextChange}/>
+        <img alt="Trash bin symbol" src="trash-bin-symbol.jpg" onClick={this.onClick} />
         </section>
       }
 
       onClick(event) {
-      fetch('http://cities.jonkri.se/5347da70-fef3-4e8f-ba49-e8010edba878', {
-        method: "DELETE"
-      });}
+        var inputId = this.state.valueID;
+        fetch(('http://cities.jonkri.se/' + inputId ) , { method: "DELETE" });
+        alert("You deleted city with id \"" + this.state.valueID + "\".");
+      }
 
+      onTextChange(event) {
+        if (event.target.id == "input-id") {
+        this.setState({valueID: event.target.value}) }
+      }
+
+      componentDidMount() {
+        fetch('http://cities.jonkri.se/')
+        .then(function (response) { return response.json(); })
+        .then(function (result) { console.log(result); });
+      }
     }
-
-
 
       ReactDOM.render(<HashRouter>
         <div>
