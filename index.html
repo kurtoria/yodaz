@@ -118,7 +118,6 @@
 
     addNewCity() {
       var city = prompt()
-      console.log(a);
       fetch("http://cities.jonkri.se/", {
         body: JSON.stringify({ "name": city, "population": " " }),
         headers: {
