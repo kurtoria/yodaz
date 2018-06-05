@@ -8,7 +8,11 @@ td > button {margin-right: 5px}
 
 table {
   background-color: gray;
-  color: white
+  color: white;
+}
+
+tr {
+  text-align: left;
 }
 
 ul {
