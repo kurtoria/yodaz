@@ -174,74 +174,15 @@ class Food extends React.Component {
   }
 }
 
-// VICTORIA
-class Updatecity extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        cities: [],
-        id: undefined,
-        city: undefined,
-        population: undefined,
-        newCity: undefined,
-        newPopulation: undefined
-      }
-      this.onClick = this.onClick.bind(this);
-    }
-    componentDidMount() {
-      fetch('http://cities.jonkri.se/')
-      .then(function (response) {
-        return response.json();
-      }).then( result => {
-        console.log(result);
-        this.setState({
-          cities: result
-        })
-      });
-    }
-    onChange() {
-      fetch('http://cities.jonkri.se/' + this.state.id, {
-        body: JSON.stringify({ "name": this.state.newCity, "population": this.state.newPopulation }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'PUT'
-      }).then(function (response) {
-        return response.json();
-      }).then( result =>  {
-        console.log(result);
-      });
-    }
-    onClick() {
-      console.log(this.state.city);
-    }
-    render() {
-      var cities = []
-      cities = this.state.cities.map(city =>
-        <tr key={city.id}>
-        <td>{city.name}</td><td>{city.population}</td>
-        {/*<button id="editButton" onClick={this.onClick}>Ändrar</button>*/}
-        <button id="editButton" onClick={function() {
-          console.log(city.id + ", " + city.name + ", " + city.population);
-
-        }}>Ändrar</button>
-        </tr>)
-        return <div><table>{cities}</table></div>
-    }
-}
-//Victoria
-
   ReactDOM.render(<HashRouter>
     <div>
         <nav>
           <ul>
             <li><Link to="/getallcities">Get all Cities</Link></li>
-            <li><Link to="/updatecity">Update City</Link></li>
             <li><Link to="/food">Food</Link></li>
         </ul>
       </nav>
     <Route component={Cities} path='/getallcities' />
-    <Route component={Updatecity} path='/updatecity' />
     <Route component={Food} path='/food' />
     </div>
   </HashRouter>,
