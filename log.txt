@@ -28,4 +28,6 @@
 - Konfigurera ESLint för projektet (Victoria, Ria, Emma, Hanna)
 - Webpack konverterat till jsx (Victoria, Ria, Emma, Hanna)
 - Användande av webpack-dev-server (Victoria, Ria, Emma, Hanna)
-- La in funktion för uppdate (Emma) 
+- La in funktion för uppdate (Emma)
+- Fixade lite kod-struktur (Hanna)
+- Tog bort onödig kod (Hanna)
