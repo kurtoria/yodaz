@@ -9,14 +9,11 @@ class Cities extends React.Component {
       cities: [],
       id: undefined,
       city: undefined,
-      population: undefined,
-      newCity: undefined,
-      newPopulation: undefined
+      population: undefined
     }
 
     this.onDeleteClick = this.onDeleteClick.bind(this)
-    this.onEditClick = this.onEditClick.bind(this)
-    this.onEditChange = this.onEditClick.bind(this)
+    this.onUpdateClick = this.onUpdateClick.bind(this)
     this.onNewCityClick = this.onNewCityClick.bind(this)
     this.onNewCityTextChange = this.onNewCityTextChange.bind(this)
     this.addNewCity = this.addNewCity.bind(this)
@@ -43,24 +40,16 @@ class Cities extends React.Component {
   })
 }
 
-  onEditChange() {
-    fetch('http://cities.jonkri.se/' + this.state.id, {
-      body: JSON.stringify({ "name": this.state.newCity, "population": this.state.newPopulation }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
+onUpdateClick(){
+  fetch('http://cities.jonkri.se/' + this.state.id , {
+    body: JSON.stringify({ name: this.state.city, population: this.state.population }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
       method: 'PUT'
-    }).then(function (response) {
-      return response.json();
-    }).then( result =>  {
-      console.log(result);
-    });
-  }
-
-  onEditClick(event) {
-    console.log(event.target.dataset.id);
-
-  }
+    })
+    this.setState({id: ''});
+}
 
   onNewCityClick() {
     console.log("City is: " + this.state.city);
@@ -121,11 +110,39 @@ addNewCity() {
 
   render(){
     var citiesToRender = this.state.cities.map(city =>
+      this.state.id === city.id ?
+    <tr id={city.id} key={city.id} >
+      <td>
+        <input onChange={function(event){
+          city.name = event.target.value
+          this.setState({
+            id: city.id,
+            city: city.name
+          })}.bind(this)}
+            value={city.name}>
+        </input>
+      </td>
+      <td>
+        <input onChange={function(event){
+          city.population = event.target.value
+          this.setState({
+            id: city.id,
+            population: event.target.value
+          })}.bind(this)}
+            value={city.population}>
+        </input>
+      </td>
+      <button type="button" onClick={this.onUpdateClick}>✔️</button>
+    </tr>
+    :
       <tr key={city.id} id={city.id} >
         <td>{city.name}</td>
         <td>{city.population}</td>
         <td>
-          <button id="penBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onEditClick}>🖊</button>
+          <button id="penBtn" data-name={city.name} data-population={city.population} data-id={city.id} onClick={function(){
+            this.setState({
+              id: city.id
+            })}.bind(this)}>🖊</button>
           <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onDeleteClick}>🗑</button>
         </td>
       </tr>)
@@ -214,61 +231,17 @@ class Updatecity extends React.Component {
 }
 //Victoria
 
-//Emma
-class Updatepopulation extends React.Component {
-  constructor(props){
-    super(props)
-      this.state = { cities: [],
-        id: undefined,
-        population: undefined,
-        cityBeingEdited: undefined}
-        this.onUpdateClick = this.onUpdateClick.bind(this)
-  }
-  onUpdateClick(){
-    fetch('http://cities.jonkri.se/' + this.state.id , {
-      body: JSON.stringify({ name: this.state.cityBeingEdited, population: this.state.population }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-        method: 'PUT'
-      })
-    }
-    render () {
-      var cities = this.state.cities.map(city =>
-      <tr key={city.id}>
-        <td>{city.name}</td>
-        <input onChange={function(event){
-          city.population = event.target.value
-          this.setState({ cityBeingEdited: city.name,
-          id: city.id, population: event.target.value })}.bind(this)}
-          value={city.population}>
-        </input>
-        <button type="button" onClick={this.onUpdateClick}>Update</button>
-      </tr>)
-        return <div><table>{cities}</table></div>
-    }
-    componentDidMount(){
-      fetch('http://cities.jonkri.se/').then(response => response.json())
-      .then(result => {
-        this.setState({ cities: result })
-        console.log(result)
-      })
-    }
-  }
-
   ReactDOM.render(<HashRouter>
     <div>
         <nav>
           <ul>
             <li><Link to="/getallcities">Get all Cities</Link></li>
             <li><Link to="/updatecity">Update City</Link></li>
-            <li><Link to="/updatepopulation">Update Population</Link></li>
             <li><Link to="/food">Food</Link></li>
         </ul>
       </nav>
     <Route component={Cities} path='/getallcities' />
     <Route component={Updatecity} path='/updatecity' />
-    <Route component={Updatepopulation} path='/updatepopulation' />
     <Route component={Food} path='/food' />
     </div>
   </HashRouter>,
