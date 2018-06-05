@@ -115,6 +115,10 @@
       }
     }
 
+    addNewCity() {
+      console.log('adding new city');
+    }
+
       render(){
         var citiesToRender = this.state.cities.map(city =>
           <tr key={city.id} id={city.id} >
@@ -139,6 +143,7 @@
               {citiesToRender}
             </tbody>
           </table>
+          <button id="addBtn" onClick={this.addNewCity}>➕</button>
           <input id="inputcity" city={this.state.city} onChange={this.onNewCityTextChange}/>
           <input id="inputpop" type="number" population={this.state.population} onChange={this.onNewCityTextChange}/>
           <button onClick={this.onNewCityClick}>ADD CITY!</button>
