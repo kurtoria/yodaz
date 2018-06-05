@@ -15,9 +15,10 @@
 
 4 juni
 - Skapar ändra stadsnamn-komponent (Victoria)
-- Komprimerat till en komponent (Victoria)
-- Slog ihop flera klasser till en klass (Victoria)
+- Komprimerat till en komponent, slog ihop flera klasser till en klass, redigerat kod så den funkar med en komponent (Victoria)
 - Fick city.id att fungera vid delete och edit (Hanna)
 - Tog bort kod som inte längre användes (Hanna)
 - Delete fungerar när man klickar på papperskorgen utan att behöva skriva in id (Hanna)
+- Geggat med css + lyft ut till egen fil (Ria)
+- Fixat med direkt refresh gällande delete och add city (Ria, Victoria, Hanna)
 -
