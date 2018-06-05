@@ -16,7 +16,6 @@ class Cities extends React.Component {
     this.onUpdateClick = this.onUpdateClick.bind(this)
     this.onNewCityClick = this.onNewCityClick.bind(this)
     this.onNewCityTextChange = this.onNewCityTextChange.bind(this)
-    this.addNewCity = this.addNewCity.bind(this)
   }
 
   componentDidMount(){
@@ -70,15 +69,9 @@ onUpdateClick(){
             console.log(result);
             this.setState({ cities: result}) })
         })
-
-        alert("You sucessfully added " + this.state.city + " with a population of " + this.state.population + ". Nice!");
         document.getElementById("inputcity").value = "";
         document.getElementById("inputpop").value = "";
-      } else {
-        alert("The city must have at least one citizen, right?");
       }
-    } else {
-      alert("You must fill all the fields.");
     }
   }
 
@@ -88,24 +81,6 @@ onNewCityTextChange(event) {
   } else {
     this.setState({population: event.target.value})
   }
-}
-
-addNewCity() {
-  var city = prompt()
-  fetch("http://cities.jonkri.se/", {
-    body: JSON.stringify({ "name": city, "population": " " }),
-    headers: {
-      "Content-Type": "application/json"
-    },
-    method: 'POST'
-  }).then(() => {
-    fetch('http://cities.jonkri.se/')
-    .then(response => response.json())
-    .then(result => {
-      console.log(result);
-      this.setState({ cities: result}) })
-  })
-
 }
 
   render(){
@@ -159,11 +134,12 @@ addNewCity() {
         <tbody>
           {citiesToRender}
         </tbody>
+        <tr>
+          <th><input id="inputcity" city={this.state.city} onChange={this.onNewCityTextChange}/></th>
+          <th><input id="inputpop" type="number" population={this.state.population} onChange={this.onNewCityTextChange}/></th>
+        <th><button onClick={this.onNewCityClick}>➕</button></th>
+        </tr>
       </table>
-      <button id="addBtn" onClick={this.addNewCity}>➕</button>
-      <input id="inputcity" city={this.state.city} onChange={this.onNewCityTextChange}/>
-      <input id="inputpop" type="number" population={this.state.population} onChange={this.onNewCityTextChange}/>
-      <button onClick={this.onNewCityClick}>ADD CITY!</button>
     </div>
   }
 }
