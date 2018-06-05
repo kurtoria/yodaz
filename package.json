@@ -1,0 +1,36 @@
+{
+  "name": "yodaz",
+  "version": "1.0.0",
+  "description": "Labb-2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurtoria/yodaz.git"
+  },
+  "author": "",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-react": "^7.9.1",
+    "webpack": "^4.10.2",
+    "webpack-cli": "^3.0.2",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kurtoria/yodaz/issues"
+  },
+  "homepage": "https://github.com/kurtoria/yodaz#readme"
+}
