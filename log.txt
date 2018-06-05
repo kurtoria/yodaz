@@ -22,3 +22,9 @@
 - Geggat med css + lyft ut till egen fil (Ria)
 - Fixat med direkt refresh gällande delete och add city (Ria, Victoria, Hanna)
 -
+
+5 Juni
+- Skapa upp nodeJS-projekt (Victoria, Ria, Emma, Hanna)
+- Konfigurera ESLint för projektet (Victoria, Ria, Emma, Hanna)
+- Webpack konverterat till jsx (Victoria, Ria, Emma, Hanna)
+- Användande av webpack-dev-server (Victoria, Ria, Emma, Hanna)
