@@ -34,6 +34,7 @@
         this.onEditChange = this.onEditClick.bind(this)
         this.onNewCityClick = this.onNewCityClick.bind(this)
         this.onNewCityTextChange = this.onNewCityTextChange.bind(this)
+        this.addNewCity = this.addNewCity.bind(this)
       }
 
       componentDidMount(){
@@ -116,7 +117,22 @@
     }
 
     addNewCity() {
-      console.log('adding new city');
+      var city = prompt()
+      console.log(a);
+      fetch("http://cities.jonkri.se/", {
+        body: JSON.stringify({ "name": city, "population": " " }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: 'POST'
+      }).then(result => {
+        fetch('http://cities.jonkri.se/')
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.setState({ cities: result}) })
+      })
+
     }
 
       render(){
