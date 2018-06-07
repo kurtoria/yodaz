@@ -241,10 +241,42 @@ var ConnectedCity = connect(
   })(Cities)
 
 class Jokes extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      joke: undefined,
+      punchline: undefined,
+      showPunchline: false,
+      disabled: true
+    }
+    this.getJoke = this.getJoke.bind(this)
+    this.getPunchline = this.getPunchline.bind(this)
+  }
+
+
+  getJoke(){
+    fetch("https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_joke")
+    .then(response => response.json())
+    .then(result => {
+      this.setState({joke: result.setup, punchline: result.punchline})
+      this.setState({showPunchline: false})
+      this.setState({disabled: false})
+    })
+  }
+
+  getPunchline(){
+    this.setState({showPunchline: true})
+    this.setState({disabled: true})
+  }
+
   render () {
+
     return <section>
-      <h1>Jokes</h1>
-      <p>...</p>
+      <div id="imageDiv"><img id="bugImage" alt="" src="not_a_bug.png" onClick={this.getJoke}></img>
+      <p>{this.state.joke}</p>
+      <input type="button" disabled={this.state.disabled} value="Get Punchline" onClick={this.getPunchline}></input>
+      <p>{this.state.showPunchline ? this.state.punchline : null}</p> {/* string */}
+      </div>
     </section>
   }
 }

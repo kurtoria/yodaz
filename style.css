@@ -25,3 +25,12 @@ li {
   font-size: 2em;
   margin-right: 2em
 }
+
+#imageDiv {
+  text-align: center;
+}
+
+#bugImage {
+  height: 200px;
+  width: 120px;
+}
