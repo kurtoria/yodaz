@@ -31,3 +31,6 @@
 - La in funktion för uppdate (Emma)
 - Fixade lite kod-struktur (Hanna)
 - Tog bort onödig kod (Hanna)
+
+6 Juni
+- Gjorde om addcity så den använder redux-state (Victoria)

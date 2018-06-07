@@ -6,15 +6,41 @@ var Redux = require("redux");
 
 var reducer = function (state, action) {
   switch (action.type) {
-  case "SET_CITIES":
-    return {
-      cities: action.payload,
-      name: state.name,
-      population: state.population
-    };
-  }
-  return state;
-};
+    case "ADD_CITY":
+      fetch('http://cities.jonkri.se', {
+        body: JSON.stringify({ name: state.name, population: state.population }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log("HÄR ÄR STÄDER :)))");
+        store.dispatch({ payload: result, type: 'SET_CITIES' })
+    })
+    return { cities: state.cities, name: '', population: '' }
+    case "SET_NAME":
+      return {
+        cities: state.cities,
+        name: action.payload,
+        population: state.population
+      }
+      case "SET_POPULATION":
+      return {
+        cities: state.cities,
+        name: state.name,
+        population: action.payload
+      }
+      case "SET_CITIES":
+      return {
+        cities: action.payload,
+        name: state.name,
+        population: state.population
+      };
+    }
+    return state;
+  };
 
 var store = Redux.createStore (
   reducer,
@@ -22,11 +48,15 @@ var store = Redux.createStore (
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
+
+//Första fetch
 fetch("http://cities.jonkri.se/")
 .then(response => response.json())
 .then(result => {
   store.dispatch({payload:result, type: "SET_CITIES"})
 })
+
+
 
 class Cities extends React.Component {
   constructor(props){
@@ -39,8 +69,8 @@ class Cities extends React.Component {
     };
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onUpdateClick = this.onUpdateClick.bind(this);
-    this.onAddClick = this.onAddClick.bind(this);
-    this.onAddTextChange = this.onAddTextChange.bind(this);
+    //this.onAddClick = this.onAddClick.bind(this);
+    //this.onAddTextChange = this.onAddTextChange.bind(this);
   }
 
   componentDidMount(){
@@ -49,6 +79,7 @@ class Cities extends React.Component {
     .then(result => {
       console.log(result);
       this.setState({cities:result})});
+
   }
 
   onDeleteClick(event) {
@@ -74,7 +105,7 @@ onUpdateClick(){
     });
     this.setState({id: ""});
 }
-
+/*
   onAddClick() {
     console.log("City is: " + this.state.city);
     console.log("Population is: " + this.state.population);
@@ -109,8 +140,10 @@ onAddTextChange(event) {
   }
 }
 
+*/
+
   render(){
-    var citiesToRender = this.state.cities.map(city =>
+    var citiesToRender = this.props.cities.map(city =>
       this.state.id === city.id ?
     <tr id={city.id} key={city.id}>
       <td>
@@ -124,7 +157,7 @@ onAddTextChange(event) {
         </input>
       </td>
       <td>
-        <input onChange = {function(event){
+        <input type="number" onChange = {function(event){
           city.population = event.target.value
           this.setState({
             id: city.id,
@@ -161,13 +194,16 @@ onAddTextChange(event) {
           {citiesToRender}
             <tr>
               <th>
-                <input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>
+                {/*<input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>*/}
+                <input id="inputcity" onChange={this.props.setName} value={this.props.name}/>
+
               </th>
               <th>
-                <input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>
+                {/*<input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>*/}
+                <input id="inputpop" type="number" onChange={this.props.setPopulation} value={this.props.population}/>
               </th>
             <th>
-              <button onClick={this.onAddClick}>➕</button>
+              <button onClick={this.props.addCity}>➕</button>
             </th>
             </tr>
         </tbody>
@@ -176,11 +212,45 @@ onAddTextChange(event) {
   }
 }
 
+
+/*
 var ConnectedCities = connect(function (state) {
   return { cities: state.cities };
 }, function () {
   return {};
 })(Cities);
+*/
+
+
+var ConnectedAddCity = connect(
+  function (state) {
+    return {
+      cities: state.cities,
+      name: state.name,
+      population: state.population
+    }
+  },
+  function (dispatch) {
+    return {
+      addCity: function () {
+        return dispatch({
+          type: "ADD_CITY"
+        })
+      },
+      setName: function (event) {
+        return dispatch({
+          payload: event.target.value,
+          type: "SET_NAME"
+        })
+      },
+      setPopulation: function (event) {
+        return dispatch({
+          payload: event.target.value,
+          type: "SET_POPULATION"
+        })
+      }
+    }
+  })(Cities)
 
 class Food extends React.Component {
   render () {
@@ -195,14 +265,15 @@ class Food extends React.Component {
     <div>
       <HashRouter>
         <div>
-          <ConnectedCities/>
           <nav>
           <ul>
             <li><Link to="/getallcities">Cities</Link></li>
             <li><Link to="/food">Food</Link></li>
           </ul>
         </nav>
-        <Route component={Cities} path="/getallcities"/>
+
+
+          <Route component={ConnectedAddCity} path="/getallcities"/>
         <Route component={Food} path="/food"/>
       </div>
     </HashRouter>
