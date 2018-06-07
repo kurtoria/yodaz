@@ -33,4 +33,5 @@
 - Tog bort onödig kod (Hanna)
 
 6 Juni
-- Gjorde om addcity så den använder redux-state (Victoria)
+- Skapade ConnectedCity-variabeln som hanterade att lägga till city genom redux. (Victoria)
+- Skapade reducer och store för POST (Victoria)
