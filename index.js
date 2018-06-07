@@ -69,8 +69,6 @@ class Cities extends React.Component {
     };
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onUpdateClick = this.onUpdateClick.bind(this);
-    //this.onAddClick = this.onAddClick.bind(this);
-    //this.onAddTextChange = this.onAddTextChange.bind(this);
   }
 
   componentDidMount(){
@@ -165,8 +163,9 @@ onAddTextChange(event) {
           })}.bind(this)}
             value = {city.population}>
         </input>
+        <button type="button" onClick={this.onUpdateClick}>✔️</button>
       </td>
-      <button type="button" onClick={this.onUpdateClick}>✔️</button>
+
     </tr>
     :
       <tr key={city.id} id={city.id} >
@@ -194,12 +193,10 @@ onAddTextChange(event) {
           {citiesToRender}
             <tr>
               <th>
-                {/*<input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>*/}
                 <input id="inputcity" onChange={this.props.setName} value={this.props.name}/>
 
               </th>
               <th>
-                {/*<input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>*/}
                 <input id="inputpop" type="number" onChange={this.props.setPopulation} value={this.props.population}/>
               </th>
             <th>
@@ -213,16 +210,7 @@ onAddTextChange(event) {
 }
 
 
-/*
-var ConnectedCities = connect(function (state) {
-  return { cities: state.cities };
-}, function () {
-  return {};
-})(Cities);
-*/
-
-
-var ConnectedAddCity = connect(
+var ConnectedCity = connect(
   function (state) {
     return {
       cities: state.cities,
@@ -252,10 +240,10 @@ var ConnectedAddCity = connect(
     }
   })(Cities)
 
-class Food extends React.Component {
+class Jokes extends React.Component {
   render () {
     return <section>
-      <h1>Food</h1>
+      <h1>Jokes</h1>
       <p>...</p>
     </section>
   }
@@ -267,14 +255,14 @@ class Food extends React.Component {
         <div>
           <nav>
           <ul>
-            <li><Link to="/getallcities">Cities</Link></li>
-            <li><Link to="/food">Food</Link></li>
+            <li><Link to="/cities">Cities</Link></li>
+            <li><Link to="/jokes">Jokes</Link></li>
           </ul>
         </nav>
 
 
-          <Route component={ConnectedAddCity} path="/getallcities"/>
-        <Route component={Food} path="/food"/>
+          <Route component={ConnectedCity} path="/cities"/>
+        <Route component={Jokes} path="/jokes"/>
       </div>
     </HashRouter>
   </div>
