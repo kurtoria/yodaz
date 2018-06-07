@@ -22,11 +22,11 @@ var store = Redux.createStore (
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-fetch("http://cities.jonkri.se/")
-.then(response => response.json())
-.then(result => {
-  store.dispatch({payload:result, type: "SET_CITIES"})
-})
+// fetch("http://cities.jonkri.se/")
+// .then(response => response.json())
+// .then(result => {
+//   store.dispatch({payload:result, type: "SET_CITIES"})
+// })
 
 class Cities extends React.Component {
   constructor(props){
@@ -132,8 +132,9 @@ onAddTextChange(event) {
           })}.bind(this)}
             value = {city.population}>
         </input>
+        <button type="button" onClick={this.onUpdateClick}>✔️</button>
       </td>
-      <button type="button" onClick={this.onUpdateClick}>✔️</button>
+
     </tr>
     :
       <tr key={city.id} id={city.id} >
@@ -160,15 +161,15 @@ onAddTextChange(event) {
         <tbody>
           {citiesToRender}
             <tr>
-              <th>
+              <td>
                 <input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>
-              </th>
-              <th>
+              </td>
+              <td>
                 <input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>
-              </th>
-            <th>
+              </td>
+            <td>
               <button onClick={this.onAddClick}>➕</button>
-            </th>
+            </td>
             </tr>
         </tbody>
       </table>
@@ -182,10 +183,10 @@ var ConnectedCities = connect(function (state) {
   return {};
 })(Cities);
 
-class Food extends React.Component {
+class Jokes extends React.Component {
   render () {
     return <section>
-      <h1>Food</h1>
+      <h1>Jokes</h1>
       <p>...</p>
     </section>
   }
@@ -195,15 +196,14 @@ class Food extends React.Component {
     <div>
       <HashRouter>
         <div>
-          <ConnectedCities/>
           <nav>
           <ul>
-            <li><Link to="/getallcities">Cities</Link></li>
-            <li><Link to="/food">Food</Link></li>
+            <li><Link to="/cities">Cities</Link></li>
+            <li><Link to="/jokes">Jokes</Link></li>
           </ul>
         </nav>
-        <Route component={Cities} path="/getallcities"/>
-        <Route component={Food} path="/food"/>
+        <Route component={ConnectedCities} path="/cities"/>
+        <Route component={Jokes} path="/jokes"/>
       </div>
     </HashRouter>
   </div>
