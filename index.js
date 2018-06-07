@@ -1,6 +1,32 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var {HashRouter, Link, Route} = require("react-router-dom");
+var {connect, Provider} = require("react-redux");
+var Redux = require("redux");
+
+var reducer = function (state, action) {
+  switch (action.type) {
+  case "SET_CITIES":
+    return {
+      cities: action.payload,
+      name: state.name,
+      population: state.population
+    };
+  }
+  return state;
+};
+
+var store = Redux.createStore (
+  reducer,
+  {cities: [], name: "", population: ""},
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+fetch("http://cities.jonkri.se/")
+.then(response => response.json())
+.then(result => {
+  store.dispatch({payload:result, type: "SET_CITIES"})
+})
 
 class Cities extends React.Component {
   constructor(props){
@@ -133,22 +159,28 @@ onAddTextChange(event) {
         </thead>
         <tbody>
           {citiesToRender}
+            <tr>
+              <th>
+                <input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>
+              </th>
+              <th>
+                <input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>
+              </th>
+            <th>
+              <button onClick={this.onAddClick}>➕</button>
+            </th>
+            </tr>
         </tbody>
-        <tr>
-          <th>
-            <input id="inputcity" city={this.state.city} onChange={this.onAddTextChange}/>
-          </th>
-          <th>
-            <input id="inputpop" type="number" population={this.state.population} onChange={this.onAddTextChange}/>
-          </th>
-        <th>
-          <button onClick={this.onAddClick}>➕</button>
-        </th>
-        </tr>
       </table>
     </div>
   }
 }
+
+var ConnectedCities = connect(function (state) {
+  return { cities: state.cities };
+}, function () {
+  return {};
+})(Cities);
 
 class Food extends React.Component {
   render () {
@@ -159,17 +191,22 @@ class Food extends React.Component {
   }
 }
 
-  ReactDOM.render(<HashRouter>
+  ReactDOM.render(<Provider store={store}>
     <div>
-        <nav>
+      <HashRouter>
+        <div>
+          <ConnectedCities/>
+          <nav>
           <ul>
             <li><Link to="/getallcities">Cities</Link></li>
             <li><Link to="/food">Food</Link></li>
-        </ul>
-      </nav>
-    <Route component={Cities} path="/getallcities"/>
-    <Route component={Food} path="/food"/>
-    </div>
-  </HashRouter>,
+          </ul>
+        </nav>
+        <Route component={Cities} path="/getallcities"/>
+        <Route component={Food} path="/food"/>
+      </div>
+    </HashRouter>
+  </div>
+        </Provider>,
     document.getElementById("app")
   );
