@@ -33,5 +33,7 @@
 - Tog bort onödig kod (Hanna)
 
 6 Juni
+- Installerade Redux, React Redux och Redux Devtools i terminalen. (Hanna & Ria)
+- Byggde om komponenterna så att vi kan hämta alla städer med Redux. (Hanna & Ria)
 - Skapade ConnectedCity-variabeln som hanterade att lägga till city genom redux. (Victoria)
 - Skapade reducer och store för POST (Victoria)
