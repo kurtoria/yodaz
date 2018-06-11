@@ -129,9 +129,10 @@ onUpdateClick(){
           })}.bind(this)}
             value = {city.population}>
         </input>
+      </td>
+      <td>
         <button type="button" onClick={this.onUpdateClick}>✔️</button>
       </td>
-
     </tr>
     :
       <tr key={city.id} id={city.id} >
@@ -158,16 +159,15 @@ onUpdateClick(){
         <tbody>
           {citiesToRender}
             <tr>
-              <th>
+              <td>
                 <input id="inputcity" onChange={this.props.setName} value={this.props.name}/>
-
-              </th>
-              <th>
+              </td>
+              <td>
                 <input id="inputpop" type="number" onChange={this.props.setPopulation} value={this.props.population}/>
-              </th>
-            <th>
+              </td>
+            <td>
               <button onClick={this.props.addCity}>➕</button>
-            </th>
+            </td>
             </tr>
         </tbody>
       </table>
