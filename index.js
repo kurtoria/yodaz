@@ -259,19 +259,18 @@ class Jokes extends React.Component {
     <div>
       <HashRouter>
         <div>
+          <div id="topBorder"></div>
           <nav>
-          <ul>
-            <li><Link to="/cities">Cities</Link></li>
-            <li><Link to="/jokes">Jokes</Link></li>
-          </ul>
-        </nav>
-
-
-          <Route component={ConnectedCity} path="/cities"/>
+            <ul>
+              <li id="citiesTab"><Link to="/cities">Cities</Link></li>
+              <li id="jokesTab"><Link to="/jokes">Jokes</Link></li>
+            </ul>
+          </nav>
+        <Route component={ConnectedCity} path="/cities"/>
         <Route component={Jokes} path="/jokes"/>
       </div>
     </HashRouter>
   </div>
-        </Provider>,
-    document.getElementById("app")
+</Provider>,
+document.getElementById("app")
   );
