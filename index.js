@@ -19,32 +19,47 @@ var reducer = function (state, action) {
         console.log("HÄR ÄR STÄDER :)))");
         store.dispatch({ payload: result, type: 'SET_CITIES' })
     })
-    return { cities: state.cities, name: '', population: '' }
+    return { cities: state.cities, id: "", name: "", population: "" }
     case "SET_NAME":
       return {
         cities: state.cities,
+        id: state.id,
         name: action.payload,
         population: state.population
       }
       case "SET_POPULATION":
       return {
         cities: state.cities,
+        id: state.id,
         name: state.name,
         population: action.payload
       }
       case "SET_CITIES":
       return {
         cities: action.payload,
+        id: state.id,
         name: state.name,
         population: state.population
-      };
+      }
+      case "DELETE_CITY":
+      console.log("Id: " + action.payload)
+        fetch(("http://cities.jonkri.se/" + action.payload ) , { method: "DELETE" })
+        .then(() => {
+          fetch("http://cities.jonkri.se/")
+          .then(response => response.json())
+          .then(result => {
+          console.log(result);
+          store.dispatch({ payload: result, type: "SET_CITIES" })
+        })
+      })
+      return{ cities: state.cities, id: "", name: "", population: "" };
     }
     return state;
   };
 
 var store = Redux.createStore (
   reducer,
-  {cities: [], name: "", population: ""},
+  {cities: [], id: "", name: "", population: ""},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
@@ -67,7 +82,6 @@ class Cities extends React.Component {
       city: undefined,
       population: undefined
     };
-    this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onUpdateClick = this.onUpdateClick.bind(this);
   }
 
@@ -80,19 +94,6 @@ class Cities extends React.Component {
 
   }
 
-  onDeleteClick(event) {
-    console.log(event.target.dataset.id);
-    var inputId = event.target.dataset.id;
-    fetch(("http://cities.jonkri.se/" + inputId ) , { method: "DELETE" })
-    .then(() => {
-      fetch("http://cities.jonkri.se/")
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        this.setState({cities: result})})
-  });
-}
-
 onUpdateClick(){
   fetch("http://cities.jonkri.se/" + this.state.id , {
     body: JSON.stringify({ name: this.state.city, population: this.state.population }),
@@ -103,42 +104,7 @@ onUpdateClick(){
     });
     this.setState({id: ""});
 }
-/*
-  onAddClick() {
-    console.log("City is: " + this.state.city);
-    console.log("Population is: " + this.state.population);
 
-    if (this.state.city != "" && this.state.population != ""){
-      if (this.state.population != 0){
-        fetch("http://cities.jonkri.se/", {
-          body: JSON.stringify({ "name": this.state.city, "population": this.state.population }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: "POST"
-        }).then(() => {
-          fetch("http://cities.jonkri.se/")
-          .then(response => response.json())
-          .then(result => {
-            console.log(result);
-            this.setState({cities: result})})
-        });
-        document.getElementById("inputcity").value = "";
-        document.getElementById("inputpop").value = "";
-      }
-    }
-  }
-
-onAddTextChange(event) {
-
-  if (event.target.id == "inputcity") {
-    this.setState({city: event.target.value});
-  } else {
-    this.setState({population: event.target.value});
-  }
-}
-
-*/
 
   render(){
     var citiesToRender = this.props.cities.map(city =>
@@ -176,7 +142,7 @@ onAddTextChange(event) {
             this.setState({
               id: city.id
             })}.bind(this)}>🖊</button>
-          <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.onDeleteClick}>🗑</button>
+          <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.props.deleteCity}>🗑</button>
         </td>
       </tr>)
 
@@ -214,6 +180,7 @@ var ConnectedCity = connect(
   function (state) {
     return {
       cities: state.cities,
+      id: state.id,
       name: state.name,
       population: state.population
     }
@@ -235,6 +202,13 @@ var ConnectedCity = connect(
         return dispatch({
           payload: event.target.value,
           type: "SET_POPULATION"
+        })
+      },
+      deleteCity: function (event) {
+        console.log("Detta är id: " + event.target.dataset.id);
+        return dispatch({
+          payload: event.target.dataset.id,
+          type: "DELETE_CITY"
         })
       }
     }
