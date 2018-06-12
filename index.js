@@ -29,28 +29,63 @@ var reducer = function(state, action) {
         cities: state.cities,
         id: "",
         name: "",
-        population: ""
+        population: "",
+        newName: "",
+         newPopulation:""
       };
+    case "SET_ID":
+      return {
+        cities: state.cities,
+        id: action.payload,
+        name: state.name,
+        population: state.population,
+        newName: action.newName,
+        newPopulation: action.newPopulation
+      }
     case "SET_NAME":
       return {
         cities: state.cities,
         id: state.id,
         name: action.payload,
-        population: state.population
+        population: state.population,
+        newName: state.newName,
+        newPopulation: state.newPopulation
       };
     case "SET_POPULATION":
       return {
         cities: state.cities,
         id: state.id,
         name: state.name,
-        population: action.payload
+        population: action.payload,
+        newName: state.newName,
+        newPopulation: state.newPopulation
       };
+    case "EDIT_NAME":
+      return {
+        cities: state.cities,
+        id: state.id,
+        name: state.name,
+        population: state.population,
+        newName: action.payload,
+        newPopulation: state.newPopulation
+      }
+    case "EDIT_POPULATION":
+      return {
+        cities: state.cities,
+        id: state.id,
+        name: state.name,
+        population: state.population,
+        newName: state.newName,
+        newPopulation: action.payload
+      }
     case "SET_CITIES":
       return {
         cities: action.payload,
         id: state.id,
         name: state.name,
-        population: state.population
+        population: state.population,
+        newName: state.newName,
+        newPopulation: state.newPopulation
       };
     case "DELETE_CITY":
       console.log("Id: " + action.payload);
@@ -72,7 +107,40 @@ var reducer = function(state, action) {
         cities: state.cities,
         id: "",
         name: "",
-        population: ""
+        population: "",
+        newName: "",
+        newPopulation:""
+      };
+    case "UPDATE_CITY":
+      console.log("ID på update är : " + action.payload)
+      fetch("http://cities.jonkri.se/" + action.payload , {
+        body: JSON.stringify({
+          name: action.payloadName,
+          population: action.payloadPopulation
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+          method: "PUT"
+        })
+        .then(() => {
+          fetch("http://cities.jonkri.se/")
+            .then(response => response.json())
+            .then(result => {
+              console.log(result);
+              store.dispatch({
+                payload: result,
+                type: "SET_CITIES"
+              })
+            })
+        })
+      return {
+        cities: state.cities,
+        id: "",
+        name: "",
+        population: "",
+        newName: "",
+        newPopulation:""
       };
   }
   return state;
@@ -83,7 +151,9 @@ var store = Redux.createStore(
     cities: [],
     id: "",
     name: "",
-    population: ""
+    population: "",
+    newName: "",
+    newPopulation:""
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
@@ -107,7 +177,6 @@ class Cities extends React.Component {
         city: undefined,
         population: undefined
       };
-      this.onUpdateClick = this.onUpdateClick.bind(this);
     }
 
     componentDidMount() {
@@ -121,48 +190,30 @@ class Cities extends React.Component {
         });
     }
 
-    onUpdateClick() {
-      fetch("http://cities.jonkri.se/" + this.state.id, {
-        body: JSON.stringify({
-          name: this.state.city,
-          population: this.state.population
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "PUT"
-      });
-      this.setState({
-        id: ""
-      });
-    }
-
     render() {
       var citiesToRender = this.props.cities.map(city =>
-        this.state.id === city.id ?
+        this.props.id === city.id ?
         <tr id={city.id} key={city.id}>
         <td>
-          <input onChange = {function(event) {
-            city.name = event.target.value
-            this.setState({
-              id: city.id,
-              city: city.name
-            })}.bind(this)}
-            value = {city.name}>
+          <input onChange = {this.props.editName}
+            value = {this.props.newName}>
           </input>
         </td>
         <td>
-          <input type="number" onChange = {function(event){
-            city.population = event.target.value
-            this.setState({
-              id: city.id,
-              population: event.target.value
-            })}.bind(this)}
-            value = {city.population}>
+          <input type="number"
+            onChange = {this.props.editPopulation}
+            value = {this.props.newPopulation}>
           </input>
         </td>
         <td>
-          <button type="button" onClick={this.onUpdateClick}>✔️</button>
+          <button type="button"
+            data-name={city.name}
+            data-population={city.population}
+            data-id={city.id}
+            onClick={event => this.props.updateCity(
+              event, this.props.newName,
+              this.props.newPopulation
+            )} >✔️</button>
         </td>
       </tr>
       :
@@ -170,10 +221,13 @@ class Cities extends React.Component {
           <td>{city.name}</td>
           <td>{city.population}</td>
           <td>
-            <button id="penBtn" data-name={city.name} data-population={city.population} data-id={city.id} onClick={function(){
-              this.setState({
-                id: city.id
-              })}.bind(this)}>🖊</button>
+            <button id="penBtn"
+              data-name={city.name}
+              data-population={city.population}
+              data-id={city.id}
+              onClick={event => this.props.setId(
+                event
+              )}>🖊</button>
             <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.props.deleteCity}>🗑</button>
           </td>
         </tr>)
@@ -211,7 +265,9 @@ class Cities extends React.Component {
           cities: state.cities,
           id: state.id,
           name: state.name,
-          population: state.population
+          population: state.population,
+          newName: state.newName,
+          newPopulation: state.newPopulation
         }
       },
       function(dispatch) {
@@ -219,6 +275,14 @@ class Cities extends React.Component {
           addCity: function() {
             return dispatch({
               type: "ADD_CITY"
+            })
+          },
+          setId: function (event) {
+            return dispatch({
+              payload: event.target.dataset.id,
+              newName: event.target.dataset.name,
+              newPopulation: event.target.dataset.population,
+              type: "SET_ID"
             })
           },
           setName: function(event) {
@@ -238,6 +302,26 @@ class Cities extends React.Component {
             return dispatch({
               payload: event.target.dataset.id,
               type: "DELETE_CITY"
+            })
+          },
+          updateCity: function (event, name, population) {
+            return dispatch({
+              payload: event.target.dataset.id,
+              payloadName: name,
+              payloadPopulation: population,
+              type: "UPDATE_CITY"
+            })
+          },
+          editName: function (event) {
+            return dispatch({
+              payload: event.target.value,
+              type: "EDIT_NAME"
+            })
+          },
+          editPopulation: function(event) {
+            return dispatch({
+              payload: event.target.value,
+              type: "EDIT_POPULATION"
             })
           }
         }

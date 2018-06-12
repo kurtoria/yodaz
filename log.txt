@@ -48,3 +48,4 @@
 - Kodstruktur (Hanna)
 
 12 Juni
+- Fick in Update i Redux (Victoria, Emma)
