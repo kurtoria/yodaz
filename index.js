@@ -11,15 +11,14 @@ var reducer = function(state, action) {
         body: JSON.stringify({
           name: state.name,
           population: state.population
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          },
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
           method: "POST"
         })
         .then(response => response.json())
         .then(result => {
-          console.log("HÄR ÄR STÄDER :)))");
           store.dispatch({
             payload: result,
             type: "SET_CITIES"
@@ -31,7 +30,7 @@ var reducer = function(state, action) {
         name: "",
         population: "",
         newName: "",
-         newPopulation:""
+        newPopulation: ""
       };
     case "SET_ID":
       return {
@@ -41,7 +40,7 @@ var reducer = function(state, action) {
         population: state.population,
         newName: action.newName,
         newPopulation: action.newPopulation
-      }
+      };
     case "SET_NAME":
       return {
         cities: state.cities,
@@ -68,7 +67,7 @@ var reducer = function(state, action) {
         population: state.population,
         newName: action.payload,
         newPopulation: state.newPopulation
-      }
+      };
     case "EDIT_POPULATION":
       return {
         cities: state.cities,
@@ -77,7 +76,7 @@ var reducer = function(state, action) {
         population: state.population,
         newName: state.newName,
         newPopulation: action.payload
-      }
+      };
     case "SET_CITIES":
       return {
         cities: action.payload,
@@ -89,7 +88,7 @@ var reducer = function(state, action) {
       };
     case "DELETE_CITY":
       console.log("Id: " + action.payload);
-      fetch(("http://cities.jonkri.se/" + action.payload), {
+      fetch("http://cities.jonkri.se/" + action.payload, {
           method: "DELETE"
         })
         .then(() => {
@@ -109,11 +108,11 @@ var reducer = function(state, action) {
         name: "",
         population: "",
         newName: "",
-        newPopulation:""
+        newPopulation: ""
       };
     case "UPDATE_CITY":
       console.log("ID på update är : " + action.payload)
-      fetch("http://cities.jonkri.se/" + action.payload , {
+      fetch("http://cities.jonkri.se/" + action.payload, {
         body: JSON.stringify({
           name: action.payloadName,
           population: action.payloadPopulation
@@ -140,7 +139,7 @@ var reducer = function(state, action) {
         name: "",
         population: "",
         newName: "",
-        newPopulation:""
+        newPopulation: ""
       };
   }
   return state;
@@ -153,7 +152,7 @@ var store = Redux.createStore(
     name: "",
     population: "",
     newName: "",
-    newPopulation:""
+    newPopulation: ""
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
@@ -194,29 +193,28 @@ class Cities extends React.Component {
       var citiesToRender = this.props.cities.map(city =>
         this.props.id === city.id ?
         <tr id={city.id} key={city.id}>
-        <td>
-          <input onChange = {this.props.editName}
-            value = {this.props.newName}>
-          </input>
-        </td>
-        <td>
-          <input type="number"
-            onChange = {this.props.editPopulation}
-            value = {this.props.newPopulation}>
-          </input>
-        </td>
-        <td>
-          <button type="button"
-            data-name={city.name}
-            data-population={city.population}
-            data-id={city.id}
-            onClick={event => this.props.updateCity(
-              event, this.props.newName,
-              this.props.newPopulation
-            )} >✔️</button>
-        </td>
-      </tr>
-      :
+          <td>
+            <input onChange = {this.props.editName}
+              value = {this.props.newName}/>
+          </td>
+          <td>
+            <input type="number"
+              onChange = {this.props.editPopulation}
+              value = {this.props.newPopulation}/>
+          </td>
+          <td>
+            <button type="button"
+              data-name={city.name}
+              data-population={city.population}
+              data-id={city.id}
+              onClick={event => this.props.updateCity(
+                event,
+                this.props.newName,
+                this.props.newPopulation
+              )} >✔️</button>
+          </td>
+        </tr>
+        :
         <tr key={city.id} id={city.id} >
           <td>{city.name}</td>
           <td>{city.population}</td>
@@ -228,7 +226,12 @@ class Cities extends React.Component {
               onClick={event => this.props.setId(
                 event
               )}>🖊</button>
-            <button id="deleteBtn" data-name={city.name} data-population={city.population} data-id={city.id}  onClick={this.props.deleteCity}>🗑</button>
+            <button id="deleteBtn"
+              data-name={city.name}
+              data-population={city.population}
+              data-id={city.id}
+              onClick={this.props.deleteCity}>🗑
+            </button>
           </td>
         </tr>)
       return <div>
@@ -244,14 +247,19 @@ class Cities extends React.Component {
             {citiesToRender}
               <tr>
                 <td>
-                  <input id="inputcity" onChange={this.props.setName} value={this.props.name}/>
+                  <input id="inputcity"
+                    onChange={this.props.setName}
+                    value={this.props.name}/>
                 </td>
                 <td>
-                  <input id="inputpop" type="number" onChange={this.props.setPopulation} value={this.props.population}/>
+                  <input id="inputpop"
+                    type="number"
+                    onChange={this.props.setPopulation}
+                    value={this.props.population}/>
                 </td>
-              <td>
-                <button onClick={this.props.addCity}>➕</button>
-              </td>
+                <td>
+                  <button onClick={this.props.addCity}>➕</button>
+                </td>
               </tr>
           </tbody>
         </table>
@@ -369,10 +377,17 @@ class Cities extends React.Component {
       render() {
         return <section>
           <div id="imageDiv">
-            <img id="bugImage" alt="" src="not_a_bug.png" onClick={this.getJoke}></img>
+            <img id="bugImage"
+              alt="" src="not_a_bug.png"
+              onClick={this.getJoke}>
+            </img>
             <p>{this.state.joke}</p>
-            <input type="button" disabled={this.state.disabled} value="Get Punchline" onClick={this.getPunchline}></input>
-            <p>{this.state.showPunchline ? this.state.punchline : null}</p> {/* string */}
+            <input type="button"
+              disabled={this.state.disabled}
+              value="Get Punchline"
+              onClick={this.getPunchline}>
+            </input>
+            <p>{this.state.showPunchline ? this.state.punchline : null}</p>
             </div>
         </section>
       }
