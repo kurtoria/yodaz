@@ -30,7 +30,12 @@ var reducer = function(state, action) {
         name: "",
         population: "",
         newName: "",
-        newPopulation: ""
+        newPopulation: "",
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "SET_ID":
       return {
@@ -39,7 +44,12 @@ var reducer = function(state, action) {
         name: state.name,
         population: state.population,
         newName: action.newName,
-        newPopulation: action.newPopulation
+        newPopulation: action.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "SET_NAME":
       return {
@@ -48,7 +58,12 @@ var reducer = function(state, action) {
         name: action.payload,
         population: state.population,
         newName: state.newName,
-        newPopulation: state.newPopulation
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "SET_POPULATION":
       return {
@@ -57,7 +72,12 @@ var reducer = function(state, action) {
         name: state.name,
         population: action.payload,
         newName: state.newName,
-        newPopulation: state.newPopulation
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "EDIT_NAME":
       return {
@@ -66,7 +86,12 @@ var reducer = function(state, action) {
         name: state.name,
         population: state.population,
         newName: action.payload,
-        newPopulation: state.newPopulation
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "EDIT_POPULATION":
       return {
@@ -75,7 +100,12 @@ var reducer = function(state, action) {
         name: state.name,
         population: state.population,
         newName: state.newName,
-        newPopulation: action.payload
+        newPopulation: action.payload,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "SET_CITIES":
       return {
@@ -84,7 +114,12 @@ var reducer = function(state, action) {
         name: state.name,
         population: state.population,
         newName: state.newName,
-        newPopulation: state.newPopulation
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "DELETE_CITY":
       console.log("Id: " + action.payload);
@@ -102,13 +137,19 @@ var reducer = function(state, action) {
               })
             })
         })
+      // return { ...state, cities: state.cites } Tips från Jon!!!
       return {
         cities: state.cities,
         id: "",
         name: "",
         population: "",
         newName: "",
-        newPopulation: ""
+        newPopulation: "",
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
     case "UPDATE_CITY":
       console.log("ID på update är : " + action.payload)
@@ -139,8 +180,79 @@ var reducer = function(state, action) {
         name: "",
         population: "",
         newName: "",
-        newPopulation: ""
+        newPopulation: "",
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: state.pokeNr
       };
+
+    case "FETCH_POKEMON":
+    console.log("In FETCH_POKEMON, nr is: " + state.pokeNr);
+    fetch('https://pokeapi.co/api/v2/pokemon/' + state.pokeNr + '/')
+    .then(response => response.json())
+    .then(result => {
+      store.dispatch({
+        payload: result,
+        nr: state.pokeNr,
+        type: "SET_POKEMON"
+      })
+})
+      return {
+        cities: state.cities,
+        id: state.id,
+        name: state.name,
+        population: state.population,
+        newName: state.newName,
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: action.payload
+      }
+
+    case "SET_POKEMONNR":
+      console.log("IN SET_POKEMONNR, nr is: " + action.payload);
+      return {
+        cities: state.cities,
+        id: state.id,
+        name: state.name,
+        population: state.population,
+        newName: state.newName,
+        newPopulation: state.newPopulation,
+        pokeName: state.pokeName,
+        pokePic: state.pokePic,
+        pokeType: state.pokeType,
+        pokeShinyPic: state.pokeShinyPic,
+        pokeNr: action.payload
+      }
+
+    case "SET_POKEMON":
+      console.log("IN SET_POKEMON, nr is: " + action.nr);
+      var types = [];
+      console.log("result.types.length = " + action.payload.types.length);
+      for (var i = 0; i < action.payload.types.length; i++) {
+        types.push(action.payload.types[i].type.name)
+      }
+      var typestring = types.join(", ");
+      console.log("Types array: " + typestring);
+      console.log("Name: " + action.payload.forms[0].name);
+
+       return {
+         cities: state.cities,
+         id: state.id,
+         name: state.name,
+         population: state.population,
+         newName: state.newName,
+         newPopulation: state.newPopulation,
+         pokeName: action.payload.forms[0].name,
+         pokePic: action.payload.sprites.front_default,
+         pokeType: "Type: " + typestring,
+         pokeShinyPic: action.payload.sprites.front_shiny,
+         pokeNr: action.nr
+       }
   }
   return state;
 };
@@ -152,7 +264,12 @@ var store = Redux.createStore(
     name: "",
     population: "",
     newName: "",
-    newPopulation: ""
+    newPopulation: "",
+    pokeName: "",
+    pokePic: "",
+    pokeType: "",
+    pokeShinyPic: "",
+    pokeNr: ""
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
@@ -166,6 +283,8 @@ fetch("http://cities.jonkri.se/")
       type: "SET_CITIES"
     })
   })
+
+
 
 class Cities extends React.Component {
     constructor(props) {
@@ -335,6 +454,8 @@ class Cities extends React.Component {
         }
       })(Cities)
 
+
+
     class Jokes extends React.Component {
       constructor(props) {
         super(props)
@@ -393,6 +514,49 @@ class Cities extends React.Component {
       }
     }
 
+    class Pokemon extends React.Component {
+
+                  render() {
+                    return <section>
+                    <h1>{this.props.pokeName.toUpperCase()}</h1>
+                    <div>
+                    <img alt="" src={this.props.pokePic}/>
+                    <img alt="" src={this.props.pokeShinyPic}/>
+                    </div>
+                    <p>{this.props.pokeType}</p>
+                    <input value={this.props.pokeNr} onChange={this.props.setPokemonNr}/>
+                    <button onClick={this.props.fetchPokemon}>SEARCH!</button>
+                    </section>;
+                  }
+              }
+
+              var ConnectedPokemon = connect(
+                function(state) {
+                  return {
+                    pokeName: state.pokeName,
+                    pokePic: state.pokePic,
+                    pokeType: state.pokeType,
+                    pokeShinyPic: state.pokeShinyPic,
+                    pokeNr: state.pokeNr
+                  }
+                },
+                function(dispatch) {
+                  return {
+                    fetchPokemon: function() {
+                      return dispatch({
+                        type: "FETCH_POKEMON"
+                      })
+
+                  },
+                  setPokemonNr: function(event) {
+                    return dispatch({
+                      payload: event.target.value,
+                      type: "SET_POKEMONNR"
+                    })
+                  }
+                }
+                })(Pokemon)
+
     ReactDOM.render(<Provider store={store}>
       <div>
         <HashRouter>
@@ -402,10 +566,12 @@ class Cities extends React.Component {
               <ul>
                 <li id="citiesTab"><Link to="/cities">Cities</Link></li>
                 <li id="jokesTab"><Link to="/jokes">Jokes</Link></li>
+                <li id="pokeTab"><Link to="/pokemon">Pokémon</Link></li>
               </ul>
             </nav>
           <Route component={ConnectedCity} path="/cities"/>
           <Route component={Jokes} path="/jokes"/>
+          <Route component={ConnectedPokemon} path="/pokemon"/>
         </div>
       </HashRouter>
     </div>
