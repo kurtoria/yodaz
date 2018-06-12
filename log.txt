@@ -42,3 +42,4 @@
 11 Juni
 - Alla går igenom koden tillsammans
 - Delete funktion med redux (Alla)
+- Kodstruktur (Hanna)
