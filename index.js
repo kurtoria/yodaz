@@ -168,27 +168,6 @@ fetch("http://cities.jonkri.se/")
   })
 
 class Cities extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        cities: [],
-        id: undefined,
-        city: undefined,
-        population: undefined
-      };
-    }
-
-    componentDidMount() {
-      fetch("http://cities.jonkri.se/")
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.setState({
-            cities: result
-          })
-        });
-    }
-
     render() {
       var citiesToRender = this.props.cities.map(city =>
         this.props.id === city.id ?
