@@ -39,6 +39,10 @@ a:hover { text-decoration: none; color: white; }
   flex-grow: 1;
   background-color: lightGray;
 }
+#pokeTab {
+  flex-grow: 1;
+  background-color: gray;
+}
 
 li {
   display: inline;
@@ -73,8 +77,6 @@ td {
     font-size: 1.2em
 }
 
-
-
 /* Jokes-Tab  */
 #imageDiv {
   text-align: center;
@@ -84,3 +86,13 @@ td {
   height: 200px;
   width: 120px;
 }
+
+#pokeSection{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-top: 100px;
+    margin-left: -100px;
+    width: 250px;
+    height: 100px;
+}​

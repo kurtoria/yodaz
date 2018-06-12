@@ -497,7 +497,7 @@ class Cities extends React.Component {
     class Pokemon extends React.Component {
 
                   render() {
-                    return <section>
+                    return <section id="pokeSection">
                     <h1>{this.props.pokeName.toUpperCase()}</h1>
                     <div>
                     <img alt="" src={this.props.pokePic}/>
