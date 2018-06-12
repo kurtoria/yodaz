@@ -287,37 +287,17 @@ fetch("http://cities.jonkri.se/")
 
 
 class Cities extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        cities: [],
-        id: undefined,
-        city: undefined,
-        population: undefined
-      };
-    }
-
-    componentDidMount() {
-      fetch("http://cities.jonkri.se/")
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.setState({
-            cities: result
-          })
-        });
-    }
-
     render() {
       var citiesToRender = this.props.cities.map(city =>
         this.props.id === city.id ?
         <tr id={city.id} key={city.id}>
           <td>
-            <input onChange = {this.props.editName}
+            <input className="input" onChange = {this.props.editName}
               value = {this.props.newName}/>
           </td>
           <td>
-            <input type="number"
+            <input className="input"
+              type="number"
               onChange = {this.props.editPopulation}
               value = {this.props.newPopulation}/>
           </td>
@@ -366,12 +346,12 @@ class Cities extends React.Component {
             {citiesToRender}
               <tr>
                 <td>
-                  <input id="inputcity"
+                  <input className="input"
                     onChange={this.props.setName}
                     value={this.props.name}/>
                 </td>
                 <td>
-                  <input id="inputpop"
+                  <input className="input"
                     type="number"
                     onChange={this.props.setPopulation}
                     value={this.props.population}/>
@@ -561,9 +541,11 @@ class Cities extends React.Component {
       <div>
         <HashRouter>
           <div>
-            <div id="topBorder"></div>
+            <div id="topBorder">
+              <img id="yodazHeader"src={"yodaz_header_white.png"} alt={""}></img>
+            </div>
             <nav>
-              <ul>
+              <ul className="flexContatiner">
                 <li id="citiesTab"><Link to="/cities">Cities</Link></li>
                 <li id="jokesTab"><Link to="/jokes">Jokes</Link></li>
                 <li id="pokeTab"><Link to="/pokemon">Pokémon</Link></li>
