@@ -43,5 +43,9 @@
 - Alla går igenom koden tillsammans
 - Delete funktion med redux (Alla)
 - Kodstruktur (Hanna)
+<<<<<<< HEAD
 - Hej Hanna
 .
+=======
+- Hej
+>>>>>>> 288bfac155b2ad0117a819b61e599cd5a70faf2b
