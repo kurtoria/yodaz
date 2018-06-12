@@ -1,31 +1,81 @@
+body { margin: 0;
+  background-image: url(marble_bg.jpg);
+  background-size: cover;
+}
+
+/* Image-border  */
+#topBorder {
+  height: 100px;
+  width: 100%;
+  background-image: url(bw_border2.jpg);
+  background-size: cover;
+  text-align: center;
+}
+
+#yodazHeader{
+  height: 90px;
+}
+
+/* NavBar and Links */
 a:link { text-decoration: none; color: black; }
 a:visited { text-decoration: none; color: black; }
 a:active { text-decoration: none; color: black; }
 a:focus { text-decoration: none; color: black; }
-a:hover { text-decoration: none; color: grey; }
+a:hover { text-decoration: none; color: white; }
 
+.flexContatiner {
+  margin-top: 0;
+  margin-bottom: 30px;
+  padding: 0;
+  display: flex;
+  text-align: center;
+}
+
+#citiesTab {
+  flex-grow: 1;
+  background-color: gray;
+}
+#jokesTab {
+  flex-grow: 1;
+  background-color: lightGray;
+}
+
+li {
+  display: inline;
+  font-size: 2em;
+}
+
+/* Table  */
 td > button {margin-right: 5px}
 
+th {
+  font-size: 2em
+}
+
 table {
-  background-color: gray;
-  color: white;
+  background-color: lightGray;
+  margin-top: 40px;
+  margin: auto;
+  width: 50%;
+  border: solid 1px gray;
 }
 
 tr {
   text-align: left;
 }
 
-ul {
-  list-style-type: none;
-  text-align: center;
+.input {
+    width: 95%;
+    font-size: 1em
 }
 
-li {
-  display: inline;
-  font-size: 2em;
-  margin-right: 2em
+td {
+    font-size: 1.2em
 }
 
+
+
+/* Jokes-Tab  */
 #imageDiv {
   text-align: center;
 }
