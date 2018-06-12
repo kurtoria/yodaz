@@ -44,3 +44,4 @@
 - Delete funktion med redux (Alla)
 - Kodstruktur (Hanna)
 - Hej Hanna
+.
