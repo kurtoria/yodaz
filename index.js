@@ -551,9 +551,9 @@ class Cities extends React.Component {
             </div>
             <nav>
               <ul className="flexContatiner">
-                <li className="tabs"><NavLink activeClassName="active" to="/">Cities</NavLink></li>
-                <li className="tabs"><NavLink activeClassName="active" to="/jokes">Jokes</NavLink></li>
-                <li className="tabs"><NavLink activeClassName="active" to="/pokemon">Pokémon</NavLink></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/" exact>Cities</NavLink></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/jokes" exact>Jokes</NavLink></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/pokemon" exact>Pokémon</NavLink></li>
               </ul>
             </nav>
           <Route component={ConnectedCity} path="/"/>
