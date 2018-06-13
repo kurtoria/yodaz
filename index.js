@@ -45,118 +45,20 @@ var reducer = function(state = {
           population: "",
           newName: "",
           newPopulation: ""
-          /*
-          cities: state.cities,
-          id: "",
-          name: "",
-          population: "",
-          newName: "",
-          newPopulation: "",
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
         };
       case "SET_ID":
-        return { ...state, id: action.payload, newName: action.newName, newPopulation: action.newPopulation
-          /*
-          cities: state.cities,
-          id: action.payload,
-          name: state.name,
-          population: state.population,
-          newName: action.newName,
-          newPopulation: action.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, id: action.payload, newName: action.newName, newPopulation: action.newPopulation };
       case "SET_NAME":
-        return { ...state, name: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: action.payload,
-          population: state.population,
-          newName: state.newName,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, name: action.payload };
       case "SET_POPULATION":
-        return { ...state, population: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: state.name,
-          population: action.payload,
-          newName: state.newName,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, population: action.payload };
       case "EDIT_NAME":
-        return { ...state, newName: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: state.name,
-          population: state.population,
-          newName: action.payload,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, newName: action.payload };
       case "EDIT_POPULATION":
-        return { ...state, newPopulation: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: state.name,
-          population: state.population,
-          newName: state.newName,
-          newPopulation: action.payload,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, newPopulation: action.payload };
       case "SET_CITIES":
-        return { ...state, cities: action.payload
-          /*
-          cities: action.payload,
-          id: state.id,
-          name: state.name,
-          population: state.population,
-          newName: state.newName,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+        return { ...state, cities: action.payload };
       case "DELETE_CITY":
-        console.log("Id: " + action.payload);
         fetch("http://cities.jonkri.se/" + action.payload, {
             method: "DELETE"
           })
@@ -164,7 +66,6 @@ var reducer = function(state = {
             fetch("http://cities.jonkri.se/")
               .then(response => response.json())
               .then(result => {
-                console.log(result);
                 store.dispatch({
                   payload: result,
                   type: "SET_CITIES"
@@ -178,22 +79,8 @@ var reducer = function(state = {
           population: "",
           newName: "",
           newPopulation: ""
-          /*
-          cities: state.cities,
-          id: "",
-          name: "",
-          population: "",
-          newName: "",
-          newPopulation: "",
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+          };
       case "UPDATE_CITY":
-        console.log("ID på update är : " + action.payload)
         fetch("http://cities.jonkri.se/" + action.payload, {
           body: JSON.stringify({
             name: action.payloadName,
@@ -208,7 +95,6 @@ var reducer = function(state = {
             fetch("http://cities.jonkri.se/")
               .then(response => response.json())
               .then(result => {
-                console.log(result);
                 store.dispatch({
                   payload: result,
                   type: "SET_CITIES"
@@ -222,23 +108,9 @@ var reducer = function(state = {
           population: "",
           newName: "",
           newPopulation: ""
-          /*
-          cities: state.cities,
-          id: "",
-          name: "",
-          population: "",
-          newName: "",
-          newPopulation: "",
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: state.pokeNr
-          */
-        };
+      };
 
       case "FETCH_POKEMON":
-      console.log("In FETCH_POKEMON, nr is: " + state.pokeNr);
       fetch('https://pokeapi.co/api/v2/pokemon/' + state.pokeNr + '/')
       .then(response => response.json())
       .then(result => {
@@ -248,51 +120,17 @@ var reducer = function(state = {
           type: "SET_POKEMON"
         })
   })
-        return { ...state, pokeNr: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: state.name,
-          population: state.population,
-          newName: state.newName,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: action.payload
-          */
-        }
+        return { ...state, pokeNr: action.payload }
 
       case "SET_POKEMONNR":
-        console.log("IN SET_POKEMONNR, nr is: " + action.payload);
-        return { ...state, pokeNr: action.payload
-          /*
-          cities: state.cities,
-          id: state.id,
-          name: state.name,
-          population: state.population,
-          newName: state.newName,
-          newPopulation: state.newPopulation,
-          pokeName: state.pokeName,
-          pokePic: state.pokePic,
-          pokeType: state.pokeType,
-          pokeShinyPic: state.pokeShinyPic,
-          pokeNr: action.payload
-          */
-        }
+        return { ...state, pokeNr: action.payload }
 
       case "SET_POKEMON":
-        console.log("IN SET_POKEMON, nr is: " + action.nr);
         var types = [];
-        console.log("result.types.length = " + action.payload.types.length);
         for (var i = 0; i < action.payload.types.length; i++) {
           types.push(action.payload.types[i].type.name)
         }
         var typestring = types.join(", ");
-        console.log("Types array: " + typestring);
-        console.log("Name: " + action.payload.forms[0].name);
-
          return {
            ...state,
            pokeName: action.payload.forms[0].name,
@@ -300,19 +138,6 @@ var reducer = function(state = {
            pokeType: "Type: " + typestring,
            pokeShinyPic: action.payload.sprites.front_shiny,
            pokeNr: action.nr
-           /*
-           cities: state.cities,
-           id: state.id,
-           name: state.name,
-           population: state.population,
-           newName: state.newName,
-           newPopulation: state.newPopulation,
-           pokeName: action.payload.forms[0].name,
-           pokePic: action.payload.sprites.front_default,
-           pokeType: "Type: " + typestring,
-           pokeShinyPic: action.payload.sprites.front_shiny,
-           pokeNr: action.nr
-           */
          }
     }
     return state;
@@ -470,7 +295,6 @@ class Cities extends React.Component {
             })
           },
           deleteCity: function(event) {
-            console.log("Detta är id: " + event.target.dataset.id);
             return dispatch({
               payload: event.target.dataset.id,
               type: "DELETE_CITY"
