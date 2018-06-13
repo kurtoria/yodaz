@@ -50,3 +50,6 @@
 12 Juni
 - Fick in Update i Redux (Victoria, Emma)
 - Städade upp kod (Emma, Victoria)
+
+13 Juni
+- Fixat spread syntax i reducer (Victoria)
