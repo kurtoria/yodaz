@@ -53,3 +53,4 @@
 
 13 Juni
 - Fixat spread syntax i reducer (Victoria)
+- Sista kodstruktur och npm install (Hanna)
