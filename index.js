@@ -500,11 +500,11 @@ class Cities extends React.Component {
                     return <section id="pokeSection">
                     <h1>{this.props.pokeName.toUpperCase()}</h1>
                     <div>
-                    <img alt="" src={this.props.pokePic}/>
-                    <img alt="" src={this.props.pokeShinyPic}/>
+                      <img alt="" src={this.props.pokePic}/>
+                      <img alt="" src={this.props.pokeShinyPic}/>
                     </div>
                     <p>{this.props.pokeType}</p>
-                    <input value={this.props.pokeNr} onChange={this.props.setPokemonNr}/>
+                    <input value={this.props.pokeNr} type="number" onChange={this.props.setPokemonNr}/>
                     <button onClick={this.props.fetchPokemon}>SEARCH!</button>
                     </section>;
                   }
