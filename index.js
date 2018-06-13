@@ -265,7 +265,7 @@ var store = Redux.createStore(
     population: "",
     newName: "",
     newPopulation: "",
-    pokeName: "",
+    pokeName: "Pokemon",
     pokePic: "",
     pokeType: "",
     pokeShinyPic: "",
@@ -498,13 +498,13 @@ class Cities extends React.Component {
 
                   render() {
                     return <section id="pokeSection">
-                    <h1>{this.props.pokeName.toUpperCase()}</h1>
+                    <h1>{(this.props.pokeName.toUpperCase())}</h1>
                     <div>
                       <img alt="" src={this.props.pokePic}/>
                       <img alt="" src={this.props.pokeShinyPic}/>
                     </div>
                     <p>{this.props.pokeType}</p>
-                    <input value={this.props.pokeNr} type="number" onChange={this.props.setPokemonNr}/>
+                    <input type="number" onChange={this.props.setPokemonNr}/>
                     <button onClick={this.props.fetchPokemon}>SEARCH!</button>
                     </section>;
                   }
