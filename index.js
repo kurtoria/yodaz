@@ -62,26 +62,22 @@ var reducer = function(state = {
     case "SET_POPULATION":
     return {
       ...state,
-      population:
-      action.payload
+      population: action.payload
     };
     case "EDIT_NAME":
     return {
       ...state,
-      newName:
-      action.payload
+      newName: action.payload
     };
     case "EDIT_POPULATION":
     return {
       ...state,
-      newPopulation:
-      action.payload
+      newPopulation: action.payload
     };
     case "SET_CITIES":
     return {
       ...state,
-      cities:
-      action.payload
+      cities: action.payload
     };
     case "DELETE_CITY":
     fetch("http://cities.jonkri.se/" + action.payload, {
