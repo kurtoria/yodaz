@@ -31,22 +31,20 @@ a:hover { text-decoration: none; color: white; }
   text-align: center;
 }
 
-#citiesTab {
-  flex-grow: 1;
-  background-color: gray;
-}
-#jokesTab {
-  flex-grow: 1;
-  background-color: lightGray;
-}
-#pokeTab {
-  flex-grow: 1;
-  background-color: gray;
-}
-
-li {
+.tabs{
   display: inline;
   font-size: 2em;
+  flex-grow: 1;
+  background-color: lightGray;
+  display: flex;
+  text-align: center;
+  justify-content: center
+
+}
+.active {
+  flex-grow: 1;
+  width: 100%;
+  background-color: gray;
 }
 
 /* Table  */
@@ -83,8 +81,12 @@ td {
 }
 
 #bugImage {
-  height: 200px;
-  width: 120px;
+  height: 300px;
+  width: 180px;
+}
+
+#getPunchlineBtn {
+  font-size: 2em;
 }
 
 /* Pokemon-Tab  */

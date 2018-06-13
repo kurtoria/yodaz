@@ -1,6 +1,6 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
-var {HashRouter, Link, Route} = require("react-router-dom");
+var {HashRouter, NavLink, Route} = require("react-router-dom");
 var {connect, Provider} = require("react-redux");
 var Redux = require("redux");
 
@@ -333,6 +333,7 @@ class Cities extends React.Component {
             </button>
           </td>
         </tr>)
+    if (this.props.match.isExact == true) {
       return <div>
         <table>
           <thead>
@@ -363,6 +364,9 @@ class Cities extends React.Component {
           </tbody>
         </table>
       </div>
+      } else {
+        return null
+      }
     }
   }
 
@@ -483,12 +487,13 @@ class Cities extends React.Component {
               onClick={this.getJoke}>
             </img>
             <p>{this.state.joke}</p>
-            <input type="button"
+            <input id="getPunchlineBtn"
+              type="button"
               disabled={this.state.disabled}
               value="Get Punchline"
               onClick={this.getPunchline}>
             </input>
-            <p>{this.state.showPunchline ? this.state.punchline : null}</p>
+            <p>{this.state.showPunchline ? (this.state.punchline.toUpperCase()) : null}</p>
             </div>
         </section>
       }
@@ -546,12 +551,12 @@ class Cities extends React.Component {
             </div>
             <nav>
               <ul className="flexContatiner">
-                <li id="citiesTab"><Link to="/cities">Cities</Link></li>
-                <li id="jokesTab"><Link to="/jokes">Jokes</Link></li>
-                <li id="pokeTab"><Link to="/pokemon">Pokémon</Link></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/">Cities</NavLink></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/jokes">Jokes</NavLink></li>
+                <li className="tabs"><NavLink activeClassName="active" to="/pokemon">Pokémon</NavLink></li>
               </ul>
             </nav>
-          <Route component={ConnectedCity} path="/cities"/>
+          <Route component={ConnectedCity} path="/"/>
           <Route component={Jokes} path="/jokes"/>
           <Route component={ConnectedPokemon} path="/pokemon"/>
         </div>
