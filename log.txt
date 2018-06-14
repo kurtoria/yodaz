@@ -41,7 +41,7 @@
 
 11 Juni
 - Alla går igenom koden tillsammans
-- Installerar npm och använder local host via terminalen (Moa)
+- Installera npm och använt local host via terminalen (Moa)
 - Konfigurerar ESLint (Moa)
 - Delete funktion med redux (Alla)
 - Försöker lösa redux på Update (Alla)
@@ -50,7 +50,12 @@
 12 Juni
 - Fick in Update i Redux (Victoria, Emma)
 - Städade upp kod (Emma, Victoria)
+- Pokemonkomponent med Redux (Moa, Emma)
 
 13 Juni
 - Fixat spread syntax i reducer (Victoria)
 - Sista kodstruktur och npm install (Hanna)
+
+14 Juni
+- npm install moment (Moa)
+- Paragraf med datum och tid för att se när cities senast uppdaterades (Moa)
