@@ -3,6 +3,7 @@ var ReactDOM = require("react-dom");
 var {HashRouter, NavLink, Route} = require("react-router-dom");
 var {connect, Provider} = require("react-redux");
 var Redux = require("redux");
+var moment = require("moment");
 
 // Spread syntax
 // Checkar om state är undefined, så får den detta värde, annars får den värden som sätts, som en if (state == undefined)
@@ -274,6 +275,7 @@ class Cities extends React.Component {
             </tr>
           </tbody>
         </table>
+        <p id="date"> Last updated {moment().format('LLLL')} </p>
       </div>
     } else {
       return null

@@ -3,6 +3,10 @@ body { margin: 0;
   background-size: cover;
 }
 
+#date {
+  text-align:center;
+}
+
 /* Image-border  */
 #topBorder {
   height: 100px;
