@@ -4,6 +4,7 @@ var {HashRouter, NavLink, Route} = require("react-router-dom");
 var {connect, Provider} = require("react-redux");
 var Redux = require("redux");
 var moment = require("moment");
+var axios = require("axios")
 
 // Spread syntax
 // Checkar om state är undefined, så får den detta värde, annars får den värden som sätts, som en if (state == undefined)
@@ -185,15 +186,17 @@ var store = Redux.createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-//Första fetch
-fetch("http://cities.jonkri.se/")
-.then(response => response.json())
-.then(result => {
+axios.get("http://cities.jonkri.se/")
+.then(function(response) {
   store.dispatch({
-    payload: result,
+    payload: response.data,
     type: "SET_CITIES"
   })
 })
+.catch(function(error) {
+  console.log("Error: " + error)
+})
+
 
 class Cities extends React.Component {
   render() {
@@ -412,6 +415,7 @@ class Jokes extends React.Component {
 
 class Pokemon extends React.Component {
   render() {
+    var isDisabled
     return <section id="pokeSection">
       <h1>{(this.props.pokeName.toUpperCase())}</h1>
       <div>
@@ -420,7 +424,8 @@ class Pokemon extends React.Component {
       </div>
       <p>{this.props.pokeType}</p>
       <input type="number" onChange={this.props.setPokemonNr}/>
-      <button onClick={this.props.fetchPokemon}>SEARCH!</button>
+      {(this.props.pokeNr > 0) ? isDisabled = false : isDisabled = true}
+      <button onClick={this.props.fetchPokemon} disabled={isDisabled}>SEARCH!</button>
       </section>;
     }
 }
