@@ -19,7 +19,8 @@ var reducer = function(state = {
   pokePic: "",
   pokeType: "",
   pokeShinyPic: "",
-  pokeNr: ""
+  pokeNr: "",
+  pokeWeight: ""
   },
   action) {
     switch (action.type) {
@@ -163,7 +164,8 @@ var reducer = function(state = {
       pokePic: action.payload.sprites.front_default,
       pokeType: "Type: " + typestring,
       pokeShinyPic: action.payload.sprites.front_shiny,
-      pokeNr: action.nr
+      pokeNr: action.nr,
+      pokeWeight: action.payload.weight
     }
   }
   return state;
@@ -181,7 +183,8 @@ var store = Redux.createStore(
     pokePic: "",
     pokeType: "",
     pokeShinyPic: "",
-    pokeNr: ""
+    pokeNr: "",
+    pokeWeight: ""
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
@@ -415,7 +418,6 @@ class Jokes extends React.Component {
 
 class Pokemon extends React.Component {
   render() {
-    var isDisabled
     return <section id="pokeSection">
       <h1>{(this.props.pokeName.toUpperCase())}</h1>
       <div>
@@ -423,9 +425,9 @@ class Pokemon extends React.Component {
         <img alt="" src={this.props.pokeShinyPic}/>
       </div>
       <p>{this.props.pokeType}</p>
+      <div>{this.props.pokeWeight > 1000 ? <p><b>This is a heavy bastard!!</b></p> : <p>This pokemon is not that big</p>}</div>
       <input type="number" onChange={this.props.setPokemonNr}/>
-      {(this.props.pokeNr > 0) ? isDisabled = false : isDisabled = true}
-      <button onClick={this.props.fetchPokemon} disabled={isDisabled}>SEARCH!</button>
+      <button onClick={this.props.fetchPokemon} disabled={this.props.pokeNr == 0}>SEARCH!</button>
       </section>;
     }
 }
@@ -437,7 +439,8 @@ var ConnectedPokemon = connect(
       pokePic: state.pokePic,
       pokeType: state.pokeType,
       pokeShinyPic: state.pokeShinyPic,
-      pokeNr: state.pokeNr
+      pokeNr: state.pokeNr,
+      pokeWeight: state.pokeWeight
     }
   },
   function(dispatch) {
