@@ -103,3 +103,18 @@ td {
     width: 250px;
     height: 100px;
 }​
+
+/* Chuck-Tab */
+#chuckSec {
+    position: fixed;
+}
+
+#chuckDiv {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+#chuck {
+  height: 200px;
+  width: 200px;
+}

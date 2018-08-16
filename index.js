@@ -460,6 +460,28 @@ var ConnectedPokemon = connect(
   }
 )(Pokemon)
 
+class ChuckNorrisJokes extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      joke: undefined
+    }
+    this.getCNJoke = this.getCNJoke.bind(this)
+  }
+  getCNJoke() {
+    axios.get('http://api.icndb.com/jokes/random')
+      .then(response => this.setState({joke: response.data.value.joke}))
+  }
+  render() {
+    return <section id="chuckSec">
+      <div id="chuckDiv">
+        <img id="chuck" alt="" src="chuck.png" onClick={this.getCNJoke}/>
+        <p>{this.state.joke}</p>
+      </div>
+    </section>
+  }
+}
+
 ReactDOM.render(<Provider store={store}>
   <div>
     <HashRouter>
@@ -478,11 +500,15 @@ ReactDOM.render(<Provider store={store}>
             <li className="tabs">
               <NavLink activeClassName="active" to="/pokemon" exact>Pokémon</NavLink>
             </li>
+            <li className="tabs">
+              <NavLink activeClassName="active" to="/chuck" exact>ChuckNorrisJokes</NavLink>
+            </li>
           </ul>
         </nav>
         <Route component={ConnectedCity} path="/"/>
         <Route component={Jokes} path="/jokes"/>
         <Route component={ConnectedPokemon} path="/pokemon"/>
+        <Route component={ChuckNorrisJokes} path="/chuck"/>
       </div>
     </HashRouter>
   </div>
